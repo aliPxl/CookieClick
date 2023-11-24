@@ -28,10 +28,15 @@ namespace CookieClick
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //koekje word kleiner 
-            KoekjeImg.Width = 70;
+            KoekjeImg.Width = 130;
         }
         //mouseUp event koekje
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            KoekjeImg.Width = 150;
+        }
+
+        private void KoekjeImg_MouseLeave(object sender, MouseEventArgs e)
         {
             KoekjeImg.Width = 150;
         }

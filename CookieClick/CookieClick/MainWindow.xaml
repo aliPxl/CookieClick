@@ -18,7 +18,13 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <Label Name="Score" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
-            <Image Source="/images/koekje.png" Width="150" Name="KoekjeImg" MouseDown="KoekjeImg_MouseDown" MouseUp="KoekjeImg_MouseUp"></Image>
+            <Image 
+                   Source="/images/koekje.png" 
+                   Width="150" Name="KoekjeImg"
+                   MouseDown="KoekjeImg_MouseDown" 
+                   MouseUp="KoekjeImg_MouseUp"
+                   MouseLeave="KoekjeImg_MouseLeave">
+            </Image>
         </StackPanel>   
         
         <StackPanel Grid.Column="1">
