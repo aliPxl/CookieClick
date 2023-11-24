@@ -20,6 +20,8 @@ namespace CookieClick
     /// </summary>
     public partial class MainWindow : Window
     {
+        //score variable double
+        double ScoreVar = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,12 +35,18 @@ namespace CookieClick
         //mouseUp event koekje
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            //koekje original size
             KoekjeImg.Width = 150;
+            //score word met 1 verhoogd
+            ScoreVar++;
         }
 
         private void KoekjeImg_MouseLeave(object sender, MouseEventArgs e)
         {
+            //koekje original size
             KoekjeImg.Width = 150;
+            //score word met 1 verhoogd
+            ScoreVar++;
         }
     }
 }
