@@ -22,8 +22,12 @@ namespace CookieClick
     {
         //score variable double
         double ScoreVar = 0;
+        //Cursor
         //prijs Cursor
         double CursorPrijs = 1;//15.00;
+        //cursor per seconden
+        double CursorSeconde=0.1;
+
         // prijs Grandma
         double GrandmaPrijs = 2;// 100.00;
         //prijs Farm
@@ -43,6 +47,7 @@ namespace CookieClick
             if (ScoreVar >= CursorPrijs)
             {
                 Cursor.IsEnabled = true;
+                Cursor.ToolTip = $"Aantal cookies per seconde: {CursorSeconde}";
             }
              if (ScoreVar >= GrandmaPrijs)
             {
