@@ -25,28 +25,43 @@ namespace CookieClick
         public MainWindow()
         {
             InitializeComponent();
+            //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word getoond
+            ScoreUpdate();
+        }
+        //scoreUpdate functie
+        private void ScoreUpdate()
+        {
+       //scorevar word nog altijd opgeslagen als commagetal maar word in de volgende relel naar onder afgerond
+       //om aan de geburiker te laten zien
+            ScoreVar=Math.Floor(ScoreVar);
+            //scorelbl word opgevuld met de score 
+            ScoreLbl.Content = $"score: {ScoreVar}";
         }
         //mouseDown event koekje
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //koekje word kleiner 
             KoekjeImg.Width = 130;
+            //score word met 1 verhoogd
+            ScoreVar++;
+            //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word 
+            ScoreUpdate();
         }
         //mouseUp event koekje
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
         {
             //koekje original size
             KoekjeImg.Width = 150;
-            //score word met 1 verhoogd
-            ScoreVar++;
+            //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word getoond
+            ScoreUpdate();
         }
 
         private void KoekjeImg_MouseLeave(object sender, MouseEventArgs e)
         {
             //koekje original size
             KoekjeImg.Width = 150;
-            //score word met 1 verhoogd
-            ScoreVar++;
+            //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word getoond
+            ScoreUpdate();
         }
     }
 }
