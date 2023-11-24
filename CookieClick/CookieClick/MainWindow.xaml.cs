@@ -24,5 +24,15 @@ namespace CookieClick
         {
             InitializeComponent();
         }
+        //mouseDown event koekje
+        private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        //mouseUp event koekje
+        private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
