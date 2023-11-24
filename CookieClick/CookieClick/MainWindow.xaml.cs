@@ -22,11 +22,41 @@ namespace CookieClick
     {
         //score variable double
         double ScoreVar = 0;
+        //prijs Cursor
+        double CursorPrijs = 1;//15.00;
+        // prijs Grandma
+        double GrandmaPrijs = 2;// 100.00;
+        //prijs Farm
+        double FarmPrijs = 3;//1100.00;
+        //prijs Mine
+        double MinePrijs = 4;//1200.00;
         public MainWindow()
         {
             InitializeComponent();
             //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word getoond
             ScoreUpdate();
+        }
+        //eigen functies 
+        //functie om te checken welke button enabled kan worden
+        private void EnableOrDisable()
+        {
+            if (ScoreVar >= CursorPrijs)
+            {
+                Cursor.IsEnabled = true;
+            }
+             if (ScoreVar >= GrandmaPrijs)
+            {
+                Grandma.IsEnabled = true;
+            }
+             if (ScoreVar >= FarmPrijs)
+            {
+                Farm.IsEnabled = true;
+            }
+             if (ScoreVar >= MinePrijs)
+            {
+                Mine.IsEnabled = true;
+            }
+
         }
         //scoreUpdate functie
         private void ScoreUpdate()
@@ -48,6 +78,7 @@ namespace CookieClick
             ScoreVar++;
             //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word 
             ScoreUpdate();
+            EnableOrDisable();
         }
         //mouseUp event koekje
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
