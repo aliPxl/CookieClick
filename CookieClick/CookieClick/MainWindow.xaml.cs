@@ -36,6 +36,8 @@ namespace CookieClick
             ScoreVar=Math.Floor(ScoreVar);
             //scorelbl word opgevuld met de score 
             ScoreLbl.Content = $"score: {ScoreVar}";
+            //tietel word ook geUpdate MW is de name van mij MainWindow
+            MW.Title = $"{ScoreVar}";
         }
         //mouseDown event koekje
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
