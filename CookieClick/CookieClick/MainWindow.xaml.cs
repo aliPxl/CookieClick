@@ -27,12 +27,13 @@ namespace CookieClick
         //mouseDown event koekje
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            //koekje word kleiner 
+            KoekjeImg.Width = 70;
         }
         //mouseUp event koekje
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            KoekjeImg.Width = 150;
         }
     }
 }
