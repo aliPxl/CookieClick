@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:CookieClick"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="/images/background.png">
+        </ImageBrush>
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -13,9 +17,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <Label Name="Score" Content="Score:0" FontSize="50"></Label>
+            <Label Name="Score" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
             <Image Source="/images/koekje.png" Width="150"></Image>
-        </StackPanel>
+        </StackPanel>   
         
         <StackPanel Grid.Column="1">
 
