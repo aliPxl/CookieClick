@@ -1,0 +1,28 @@
+﻿<Window x:Class="CookieClick.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CookieClick"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Label Name="Score" Content="Score:0" FontSize="50"></Label>
+            <Image Source="/images/koekje.png" Width="150"></Image>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1">
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="2">
+
+        </StackPanel>
+    </Grid>
+</Window>
