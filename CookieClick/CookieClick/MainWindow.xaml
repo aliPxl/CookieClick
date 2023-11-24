@@ -30,7 +30,6 @@
         <StackPanel Grid.Column="1">
 
         </StackPanel>
-<!--button name Cursor, lblCursorAantal-->
         <StackPanel Grid.Column="2">
             <Button x:Name="Cursor" IsEnabled="False">
                 <Grid>
@@ -50,7 +49,24 @@
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">15</Label>
                 </Grid>
             </Button>
-            <Button x:Name="Grandma" IsEnabled="False" >Grandma</Button>
+            <Button x:Name="Grandma" IsEnabled="False">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="images/SupperGrandma.png" Width="40"></Image>
+                    <Label Grid.Column="1">Cursor</Label>
+                    <Label Name="LblGrandmaAantal" Grid.Column="2">0</Label>
+                    <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">15</Label>
+                </Grid>
+            </Button>
             <Button x:Name="Farm" IsEnabled="False" >Farm</Button>
             <Button x:Name="Mine" IsEnabled="False" >Mine</Button>
         </StackPanel>

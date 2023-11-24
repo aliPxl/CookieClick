@@ -24,12 +24,14 @@ namespace CookieClick
         double ScoreVar = 0;
         //Cursor
         //prijs Cursor
-        double CursorPrijs = 1;//15.00;
+        double CursorPrijs = 15.00;
         //cursor per seconden
         double CursorSeconde=0.1;
-
+        //Grandma
         // prijs Grandma
         double GrandmaPrijs = 2;// 100.00;
+        double GrandmaSeconde = 1.0;
+
         //prijs Farm
         double FarmPrijs = 3;//1100.00;
         //prijs Mine
@@ -47,13 +49,15 @@ namespace CookieClick
             if (ScoreVar >= CursorPrijs)
             {
                 Cursor.IsEnabled = true;
-                Cursor.ToolTip = $"Aantal cookies per seconde: {CursorSeconde}";
+                ScoreUpdate();
             }
              if (ScoreVar >= GrandmaPrijs)
             {
                 Grandma.IsEnabled = true;
+                ScoreUpdate();
+
             }
-             if (ScoreVar >= FarmPrijs)
+            if (ScoreVar >= FarmPrijs)
             {
                 Farm.IsEnabled = true;
             }
@@ -73,6 +77,13 @@ namespace CookieClick
             ScoreLbl.Content = $"score: {ScoreVar}";
             //tietel word ook geUpdate MW is de name van mij MainWindow
             MW.Title = $"{ScoreVar}";
+            //buttons 
+            //Cursor
+            LblCursorPrijs.Content = $"{CursorPrijs}";
+            Cursor.ToolTip= $"Aantal cookies per seconde: {CursorSeconde}";
+            //Grandma
+            Grandma.ToolTip = $"Aantal cookies per seconde: {GrandmaSeconde}";
+            LblGrandmaPrijs.Content = $"{GrandmaPrijs}";
         }
         //mouseDown event koekje
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
