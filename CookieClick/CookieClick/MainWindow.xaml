@@ -32,7 +32,10 @@
         </StackPanel>
 
         <StackPanel Grid.Column="2">
-
+            <Button x:Name="Cursor">Cursor</Button>
+            <Button x:Name="Grandma">Grandma</Button>
+            <Button x:Name="Farm">Farm</Button>
+            <Button x:Name="Mine">Mine</Button>
         </StackPanel>
     </Grid>
 </Window>
