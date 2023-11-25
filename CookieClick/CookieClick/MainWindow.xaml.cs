@@ -22,21 +22,38 @@ namespace CookieClick
     {
         //score variable double
         double ScoreVar = 0;
+
         //Cursor
         //prijs Cursor
         double CursorPrijs = 15.00;
         //cursor per seconden
         double CursorSeconde=0.1;
+        //count om bij te houden hoevaak de speler deze investering heeft gekocht hoeveel de speler hee
+        int CursorAantal = 0;
+
         //Grandma
         // prijs Grandma
         double GrandmaPrijs = 2;// 100.00;
+        //grandma per seconde
         double GrandmaSeconde = 1.0;
+        //count om bij te houden hoevaak de speler deze investering heeft gekocht hoeveel de speler hee
+        int GrandmaAantal = 0;
+
         //farm
         //prijs Farm
         double FarmPrijs = 3;//1100.00;
+        //farm per seconde
         double FarmSeconde = 8.0;
+        //count om bij te houden hoevaak de speler deze investering heeft gekocht hoeveel de speler hee
+        int FarmAantal = 0;
+
+        //mine
         //prijs Mine
         double MinePrijs = 4;//1200.00;
+        //mine per seconde
+        double MineSeconde = 47.0;
+        //count om bij te houden hoevaak de speler deze investering heeft gekocht hoeveel de speler hee
+        int MineAantal = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -78,16 +95,27 @@ namespace CookieClick
             ScoreLbl.Content = $"score: {ScoreVar}";
             //tietel word ook geUpdate MW is de name van mij MainWindow
             MW.Title = $"{ScoreVar}";
-            //buttons 
+
+            /////////////////////////////////////////////////////////////////buttons 
             //Cursor
             LblCursorPrijs.Content = $"{CursorPrijs}";
+            LblCursorAantal.Content = $"{CursorAantal}";
             Cursor.ToolTip= $"Aantal cookies per seconde: {CursorSeconde}";
+
             //Grandma
-            Grandma.ToolTip = $"Aantal cookies per seconde: {GrandmaSeconde}";
             LblGrandmaPrijs.Content = $"{GrandmaPrijs}";
+            LblGrandmaAantal.Content = $"{GrandmaAantal}";
+            Grandma.ToolTip = $"Aantal cookies per seconde: {GrandmaSeconde}";
+
             //Farm
-            Farm.ToolTip = $"Aantal cookies per seconde: {FarmSeconde}";
-            LblFarmPrijs.Content = $"{FarmPrijs}";
+              LblFarmPrijs.Content = $"{FarmPrijs}";
+              LblFarmAantal.Content = $"{FarmAantal}";
+              Farm.ToolTip = $"Aantal cookies per seconde: {FarmSeconde}";
+
+            //Mine
+            LblMinePrijs.Content = $"{MinePrijs}";
+            LblMineAantal.Content = $"{MineAantal}";
+            Mine.ToolTip = $"Aantal cookies per seconde: {MineSeconde}";
         }
         //mouseDown event koekje
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)

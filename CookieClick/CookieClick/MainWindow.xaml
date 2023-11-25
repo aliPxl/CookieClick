@@ -62,9 +62,9 @@
                     </Grid.RowDefinitions>
 
                     <Image Source="images/SupperGrandma.png" Width="40"></Image>
-                    <Label Grid.Column="1">Cursor</Label>
+                    <Label Grid.Column="1">Grandma</Label>
                     <Label Name="LblGrandmaAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">15</Label>
+                    <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
             <Button x:Name="Farm" IsEnabled="False" >
@@ -85,8 +85,25 @@
                     <Label Name="LblFarmPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            
-            <Button x:Name="Mine" IsEnabled="False" >Mine</Button>
+
+            <Button x:Name="Mine" IsEnabled="False" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="images/Mine.jpg" Width="40"></Image>
+                    <Label Grid.Column="1">Mine</Label>
+                    <Label Name="LblMineAantal" Grid.Column="2">0</Label>
+                    <Label Name="LblMinePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
+                </Grid>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
