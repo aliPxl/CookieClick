@@ -31,9 +31,10 @@ namespace CookieClick
         // prijs Grandma
         double GrandmaPrijs = 2;// 100.00;
         double GrandmaSeconde = 1.0;
-
+        //farm
         //prijs Farm
         double FarmPrijs = 3;//1100.00;
+        double FarmSeconde = 8.0;
         //prijs Mine
         double MinePrijs = 4;//1200.00;
         public MainWindow()
@@ -84,6 +85,9 @@ namespace CookieClick
             //Grandma
             Grandma.ToolTip = $"Aantal cookies per seconde: {GrandmaSeconde}";
             LblGrandmaPrijs.Content = $"{GrandmaPrijs}";
+            //Farm
+            Farm.ToolTip = $"Aantal cookies per seconde: {FarmSeconde}";
+            LblFarmPrijs.Content = $"{FarmPrijs}";
         }
         //mouseDown event koekje
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
