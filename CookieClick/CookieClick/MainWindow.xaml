@@ -31,7 +31,7 @@
 
         </StackPanel>
         <StackPanel Grid.Column="2">
-            <Button x:Name="Cursor" IsEnabled="False">
+            <Button x:Name="Cursor" IsEnabled="False" Click="Cursor_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -49,7 +49,7 @@
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="Grandma" IsEnabled="False">
+            <Button x:Name="Grandma" IsEnabled="False" Click="Grandma_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -67,7 +67,7 @@
                     <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="Farm" IsEnabled="False" >
+            <Button x:Name="Farm" IsEnabled="False" Click="Farm_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -86,7 +86,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="Mine" IsEnabled="False" >
+            <Button x:Name="Mine" IsEnabled="False" Click="Mine_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>

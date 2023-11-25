@@ -64,24 +64,55 @@ namespace CookieClick
         //functie om te checken welke button enabled kan worden
         private void EnableOrDisable()
         {
+            ///cursor groter dan de prijs dan word button enabled 
             if (ScoreVar >= CursorPrijs)
             {
                 Cursor.IsEnabled = true;
                 ScoreUpdate();
             }
-             if (ScoreVar >= GrandmaPrijs)
+            //zodra deze lager gaat word de button weer disabled 
+            else if (ScoreVar < CursorPrijs)
+            {
+                Cursor.IsEnabled = false; 
+                ScoreUpdate();
+            }
+
+            //Grandam groter dan de prijs dan word button enabled
+            if (ScoreVar >= GrandmaPrijs)
             {
                 Grandma.IsEnabled = true;
                 ScoreUpdate();
 
             }
+            //zodra deze lager gaat word de button weer disabled 
+            else if (ScoreVar < GrandmaPrijs)
+            {
+                Grandma.IsEnabled = false;
+                ScoreUpdate();
+            }
+
+            //Farm groter dan de prijs dan word button enabled
             if (ScoreVar >= FarmPrijs)
             {
                 Farm.IsEnabled = true;
             }
-             if (ScoreVar >= MinePrijs)
+            //zodra deze lager gaat word de button weer disabled 
+            else if (ScoreVar <= FarmPrijs)
+            {
+                Farm.IsEnabled = false;
+                ScoreUpdate();
+            }
+
+            //Mine groter dan de prijs dan word button enabled
+            if (ScoreVar >= MinePrijs)
             {
                 Mine.IsEnabled = true;
+            }
+            //zodra deze lager gaat word de button weer disabled 
+            else if (ScoreVar <= MinePrijs)
+            {
+                Mine.IsEnabled = false;
+                ScoreUpdate();
             }
 
         }
@@ -143,6 +174,38 @@ namespace CookieClick
             KoekjeImg.Width = 150;
             //score Update functie word opgeroepen deze zorgt ervoor dat de score aan de gebruiker word getoond
             ScoreUpdate();
+        }
+
+        private void Cursor_Click(object sender, RoutedEventArgs e)
+        {
+            CursorAantal++;
+            ScoreVar -= CursorPrijs;
+            ScoreUpdate();
+            EnableOrDisable();
+        }
+
+        private void Grandma_Click(object sender, RoutedEventArgs e)
+        {
+            GrandmaAantal++;
+            ScoreVar -= GrandmaPrijs;
+            ScoreUpdate();
+            EnableOrDisable();
+        }
+
+        private void Farm_Click(object sender, RoutedEventArgs e)
+        {
+            FarmAantal++;
+            ScoreVar -= FarmPrijs;
+            ScoreUpdate();
+            EnableOrDisable();
+        }
+
+        private void Mine_Click(object sender, RoutedEventArgs e)
+        {
+            MineAantal++;
+            ScoreVar -= MinePrijs;
+            ScoreUpdate();
+            EnableOrDisable();
         }
     }
 }
