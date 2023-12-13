@@ -17,21 +17,22 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <Label Name="ScoreLbl" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
+            <Label Name="LblScore" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
             <Image 
-                   Source="/images/koekje.png" 
-                   Width="150" Name="KoekjeImg"
-                   MouseDown="KoekjeImg_MouseDown" 
-                   MouseUp="KoekjeImg_MouseUp"
-                   MouseLeave="KoekjeImg_MouseLeave">
+            Source="/images/koekje.png" 
+            Width="150" Name="KoekjeImg"
+            MouseDown="KoekjeImg_MouseDown" 
+            MouseUp="KoekjeImg_MouseUp"
+            MouseLeave="KoekjeImg_MouseLeave">
             </Image>
-        </StackPanel>   
-        
+        </StackPanel>
+
         <StackPanel Grid.Column="1">
 
         </StackPanel>
-        <StackPanel Grid.Column="2">
-            <Button x:Name="Cursor" IsEnabled="False" Click="Cursor_Click">
+        <ScrollViewer Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto"  Margin="50,50">
+        <StackPanel>
+            <Button x:Name="CursorBtn" IsEnabled="False" Click="Button_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -49,7 +50,7 @@
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="Grandma" IsEnabled="False" Click="Grandma_Click">
+            <Button x:Name="GrandmaBtn" IsEnabled="False" Click="Button_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -67,7 +68,7 @@
                     <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="Farm" IsEnabled="False" Click="Farm_Click">
+            <Button x:Name="FarmBtn" IsEnabled="False" Click="Button_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -86,7 +87,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="Mine" IsEnabled="False" Click="Mine_Click">
+            <Button x:Name="MineBtn" IsEnabled="False" Click="Button_Click">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -104,6 +105,61 @@
                     <Label Name="LblMinePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+            <Button x:Name="FactoryBtn" IsEnabled="False" Click="Button_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="images/Factory.png" Width="40"></Image>
+                    <Label Grid.Column="1">Factory</Label>
+                    <Label Name="LblFactoryAantal" Grid.Column="2">0</Label>
+                    <Label Name="LblFactoryPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
+                </Grid>
+            </Button>
+            <Button x:Name="BankBtn" IsEnabled="False" Click="Button_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="images/Bank.png" Width="40"></Image>
+                    <Label Grid.Column="1">Bank</Label>
+                    <Label Name="LblBankAantal" Grid.Column="2">0</Label>
+                    <Label Name="LblBankPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
+                </Grid>
+            </Button>
+            <Button x:Name="TempleBtn" IsEnabled="False" Click="Button_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="images/Temple.png" Width="40"></Image>
+                    <Label Grid.Column="1">Temple</Label>
+                    <Label Name="LblTempleAantal" Grid.Column="2">0</Label>
+                    <Label Name="LblTemplePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
+                </Grid>
+            </Button>
         </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
