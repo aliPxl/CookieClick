@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-
+using System.Numerics;
 namespace CookieClick
 {
     /// <summary>
@@ -21,8 +21,19 @@ namespace CookieClick
     /// </summary>
     public partial class MainWindow : Window
     {
+        string ScoreString;
+        const long million = 1000000;
+        const long miljard = 1000000000;
+        const long billion = 1000000000000;
+        const long biljart = 1000000000000000;
+        BigInteger triljoen = BigInteger.Parse("1000000000000000000");
+            //1000000000000000000;
+
+        const long honderdDuizend = 10000; 
+
         DispatcherTimer timer;
-        double ScoreVar = 0;
+       double ScoreVar = 1025643;
+        //double ScoreVar = 0;
         int ButtonClicked = 0;
         double PasiveIncomenVar = 0;
         //                                               BUTTONS
@@ -120,17 +131,83 @@ namespace CookieClick
         {
             KoekjeImg.Width = 150;
         }
+
+        private void  TranslateScore(double number)
+        {
+            LblScore.Content = Math.Round(Math.Ceiling(ScoreVar), 1);
+            //double Million = 1000000;
+            //double HonderdDuizend = 10000;
+             ScoreString = ScoreVar.ToString();
+            //honderdduizend
+            if (number >= honderdDuizend && number <= million)
+            {
+                ScoreString = ScoreString.Insert(2, " ");
+                LblScore.Content= ScoreString;
+            }
+            //milion
+            if (number >= million && number <= miljard)
+            {
+                ScoreString = ScoreString.Insert(2, " ");
+                double  millionValue = Math.Round( number / million,3);
+                LblScore.Content=$"{millionValue:N3} million";
+            }
+            //miljard
+            if (number >= miljard && number <= billion)
+            {
+                double miljardValue = Math.Round(number / miljard, 2);
+                LblScore.Content = $"{miljardValue:N3} Miljard";
+                //    return $"{BillionValue} Billion ";
+                //return $" { number / billion:N1} billion";
+            }
+            //billion
+            if (number >= billion && number <= biljart)
+            {
+                double BillionValue = Math.Round(number / billion, 3);
+                LblScore.Content = $"{BillionValue:N3} Billion";
+                //    return $"{BillionValue} Billion ";
+                //return $" { number / billion:N1} billion";
+            }
+            //biljart
+            //if (number >= biljart && number <= triljoen)
+            //{
+            //    double BiljartValue = Math.Round(number / biljart, 3);
+            //    LblScore.Content = $"{BiljartValue:N3} Biljart";
+            //    //    return $"{BillionValue} Billion ";
+            //    //return $" { number / billion:N1} billion";
+            //}
+
+            ////trillion
+            //if (number >= triljoen)
+            //{
+            //    double triljoenValue = Math.Round(number / triljoen, 3);
+            //    LblScore.Content = $"{triljoenValue:N3} triljoen";
+            //    //    return $"{BillionValue} Billion ";
+            //    //return $" { number / billion:N1} billion";
+            //}
+            //else if (number >= honderdDuizend)
+            //{
+            //    return $"{number / honderdDuizend:N1} Duizend";
+            //}
+            //else
+            //{
+            //    return number.ToString();
+            //}
+            //  return ScoreString;
+        }
         private void UpdateFunctie()
         {
-            CanInvest();
 
+            CanInvest();
+            TranslateScore(ScoreVar);
             //score word afgerond en getoond in de lable Boven 
             //LblScore.Content = Math.Round(ScoreVar, 1);
-            LblScore.Content = Math.Ceiling(ScoreVar);
+            //LblScore.Content = Math.Round( Math.Ceiling(ScoreVar),1);
        //     double afgekapt = Math.Round(double.Parse(TranslateScore(ScoreVar)));
-            MW.Title = TranslateScore(ScoreVar);
-            LblPassiveIncomen.Content = PasiveIncomenVar;
+           // MW.Title = TranslateScore(ScoreVar);
+            // = TranslateScore(ScoreVar);
+            LblPassiveIncomen.Content =$"+ {Math.Round(PasiveIncomenVar, 2)}";
            // MW.Title = Math.Round(double.Parse(TranslateScore(ScoreVar))).ToString();
+
 
             //nieuwe button !!!!!!!!!!!!!!
             //cursor        prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
@@ -170,6 +247,7 @@ namespace CookieClick
         /// </summary>
         private void CanInvest()
         {
+           
             //Cursor
             if (prijsBerekenen(BasisPrijsCursor, CursorAantalVar) > ScoreVar)
             {
@@ -209,9 +287,9 @@ namespace CookieClick
             {
                 MineBtn.IsEnabled = false;
                 LblMinePrijs.Foreground = new SolidColorBrush(Colors.Red);
-            }
-            else
-            {
+            }      
+            else   
+            {      
                 MineBtn.IsEnabled = true;
                 LblMinePrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
@@ -304,7 +382,7 @@ namespace CookieClick
                     PasiveIncomenVar += TemplePerSeconde;
                     break;
             }
-
+            TranslateScore(ScoreVar);
         }
 
         /// <summary>
