@@ -24,7 +24,7 @@ namespace CookieClick
         DispatcherTimer timer;
         double ScoreVar = 0;
         int ButtonClicked = 0;
-        //double PasiveIncomenVar = 0;
+        double PasiveIncomenVar = 0;
         //                                               BUTTONS
         //cursor
         private const double BasisPrijsCursor = 15;
@@ -69,6 +69,11 @@ namespace CookieClick
             timer.Tick += TickerUpdate;
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Start();
+
+            timer = new DispatcherTimer();
+            timer.Tick += PassiveIncome;
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Start();
         }
         //TickerUpdate word om de 10 miliseconde gedaan
         private void TickerUpdate(object sender, EventArgs e)
@@ -78,6 +83,17 @@ namespace CookieClick
             //for elke soort inkomsten
             //    verhoog score op basis van hoeveelheid cursors/grandmas/... * inkomst van cursor/grandmas/...
 
+            UpdateFunctie();
+        }
+
+        private void PassiveIncome(object sender, EventArgs e)
+        {
+            // ScoreVar += alle verschillende passive inkomsten;
+
+            //for elke soort inkomsten
+            //    verhoog score op basis van hoeveelheid cursors/grandmas/... * inkomst van cursor/grandmas/...
+            ScoreVar += PasiveIncomenVar;
+            LblPassiveIncomen.Content = $"+{PasiveIncomenVar}";
             UpdateFunctie();
         }
 
@@ -109,8 +125,12 @@ namespace CookieClick
             CanInvest();
 
             //score word afgerond en getoond in de lable Boven 
-            LblScore.Content = Math.Round(ScoreVar, 1);
-            MW.Title = ScoreVar.ToString();
+            //LblScore.Content = Math.Round(ScoreVar, 1);
+            LblScore.Content = Math.Ceiling(ScoreVar);
+       //     double afgekapt = Math.Round(double.Parse(TranslateScore(ScoreVar)));
+            MW.Title = TranslateScore(ScoreVar);
+            LblPassiveIncomen.Content = PasiveIncomenVar;
+           // MW.Title = Math.Round(double.Parse(TranslateScore(ScoreVar))).ToString();
 
             //nieuwe button !!!!!!!!!!!!!!
             //cursor        prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
@@ -154,68 +174,82 @@ namespace CookieClick
             if (prijsBerekenen(BasisPrijsCursor, CursorAantalVar) > ScoreVar)
             {
                 CursorBtn.IsEnabled = false;
+                LblCursorPrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 CursorBtn.IsEnabled = true;
+                LblCursorPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
             //Grandma
 
             if (prijsBerekenen(BasisPrijsGrandma, GrandmaAantalVar) > ScoreVar)
             {
                 GrandmaBtn.IsEnabled = false;
+                LblGrandmaPrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 GrandmaBtn.IsEnabled = true;
+                LblGrandmaPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
             //Farm
             if (prijsBerekenen(BasisPrijsFarm, FarmAantalVar) > ScoreVar)
             {
                 FarmBtn.IsEnabled = false;
+                LblFarmPrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 FarmBtn.IsEnabled = true;
+                LblFarmPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
             //Mine
             if (prijsBerekenen(BasisPrijsMine, MineAantalVar) > ScoreVar)
             {
                 MineBtn.IsEnabled = false;
+                LblMinePrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 MineBtn.IsEnabled = true;
+                LblMinePrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
 
             //Factory
             if (prijsBerekenen(BasisPrijsFactory, FactoryAantalVar) > ScoreVar)
             {
                 FactoryBtn.IsEnabled = false;
+                LblFactoryPrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 FactoryBtn.IsEnabled = true;
+                LblFactoryPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
 
             //Bank
             if (prijsBerekenen(BasisPrijsBank, BankAantalVar) > ScoreVar)
             {
                 BankBtn.IsEnabled = false;
+                LblBankPrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 BankBtn.IsEnabled = true;
+                LblBankPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
 
             //Temple
             if (prijsBerekenen(BasisPrijsTemple, TempleAantalVar) > ScoreVar)
             {
                 TempleBtn.IsEnabled = false;
+                LblTemplePrijs.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
                 TempleBtn.IsEnabled = true;
+                LblTemplePrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
         }
 
@@ -231,36 +265,43 @@ namespace CookieClick
                 case "CursorBtn":
                     CursorAantalVar++;
                     ScoreVar -= double.Parse(LblCursorPrijs.Content.ToString());
+                    PasiveIncomenVar += CursorPerSeconde;
                     break;
                 //Grandma
                 case "GrandmaBtn":
                     GrandmaAantalVar++;
                     ScoreVar -= double.Parse(LblGrandmaPrijs.Content.ToString());
+                    PasiveIncomenVar += GrandmaPerSeconde;
                     break;
                 //Farm
                 case "FarmBtn":
                     FarmAantalVar++;
                     ScoreVar -= double.Parse(LblFarmPrijs.Content.ToString());
+                    PasiveIncomenVar += FarmPerSeconde;
                     break;
                 //Mine
                 case "MineBtn":
                     MineAantalVar++;
                     ScoreVar -= double.Parse(LblMinePrijs.Content.ToString());
+                    PasiveIncomenVar += MinePerSeconde;
                     break;
                 //Factory
                 case "FactoryBtn":
                     FactoryAantalVar++;
                     ScoreVar -= double.Parse(LblFactoryPrijs.Content.ToString());
+                    PasiveIncomenVar += FactoryPerSeconde;
                     break;
                 //Bank
                 case "BankBtn":
                     BankAantalVar++;
                     ScoreVar -= double.Parse(LblBankPrijs.Content.ToString());
+                    PasiveIncomenVar += BankPerSeconde;
                     break;
                 //Temple
                 case "TempleBtn":
                     TempleAantalVar++;
                     ScoreVar -= double.Parse(LblTemplePrijs.Content.ToString());
+                    PasiveIncomenVar += TemplePerSeconde;
                     break;
             }
 

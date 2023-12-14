@@ -25,6 +25,7 @@
             MouseUp="KoekjeImg_MouseUp"
             MouseLeave="KoekjeImg_MouseLeave">
             </Image>
+            <Label Name="LblPassiveIncomen" Foreground="Beige" HorizontalAlignment="Center" FontSize="50">0</Label>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
