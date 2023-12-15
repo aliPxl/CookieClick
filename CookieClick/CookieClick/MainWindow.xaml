@@ -17,6 +17,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel>
+            <Label Name="LblBakkerijNaam" Content="PXL-Bakery" Foreground ="Beige" FontSize="30" MouseDown="LblBakkerijNaam_MouseDown"></Label>
             <Label Name="LblScore" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
             <Image 
             Source="/images/koekje.png" 
