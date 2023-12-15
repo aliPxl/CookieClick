@@ -405,7 +405,7 @@ namespace CookieClick
             //content opvragen en opslaan als nieuweBakkerijNaam
             string nieuweBakkerijNaam = Interaction.InputBox("enter new name");
 
-            if (nieuweBakkerijNaam!="")
+            if (nieuweBakkerijNaam.Trim()!="")
             {
                 // Update label content
                 LblBakkerijNaam.Content = nieuweBakkerijNaam;
