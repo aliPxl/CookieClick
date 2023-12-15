@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Numerics;
+using Microsoft.VisualBasic;
+
 namespace CookieClick
 {
     /// <summary>
@@ -397,7 +399,23 @@ namespace CookieClick
             return NieuwPrijs;
 
         }
+        //mouseDown omdat het een lable is 
+        private void LblBakkerijNaam_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //content opvragen en opslaan als nieuweBakkerijNaam
+            string nieuweBakkerijNaam = Interaction.InputBox("enter new name");
 
+            if (nieuweBakkerijNaam!="")
+            {
+                // Update label content
+                LblBakkerijNaam.Content = nieuweBakkerijNaam;
+            }
+            else
+            {
+                MessageBox.Show("content mag niet leeg zijn of leegruimte bevatten ");
+            }
+
+        }
 
     }
 }
