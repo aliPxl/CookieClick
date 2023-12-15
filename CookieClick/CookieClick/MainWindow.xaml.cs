@@ -23,6 +23,7 @@ namespace CookieClick
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         string ScoreString;
         const long million = 1000000;
         const long miljard = 1000000000;
@@ -34,7 +35,9 @@ namespace CookieClick
         const long honderdDuizend = 10000; 
 
         DispatcherTimer timer;
-       double ScoreVar = 1025643;
+     ///   double ScoreVar = 1025643;
+        double ScoreVar = 0;
+        double TotaalScore = 0;
         //double ScoreVar = 0;
         int ButtonClicked = 0;
         double PasiveIncomenVar = 0;
@@ -78,6 +81,7 @@ namespace CookieClick
         public MainWindow()
         {
             InitializeComponent();
+           
             timer = new DispatcherTimer();
             timer.Tick += TickerUpdate;
             timer.Interval = TimeSpan.FromMilliseconds(10);
@@ -87,6 +91,8 @@ namespace CookieClick
             timer.Tick += PassiveIncome;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Start();
+
+      
         }
         //TickerUpdate word om de 10 miliseconde gedaan
         private void TickerUpdate(object sender, EventArgs e)
@@ -111,10 +117,6 @@ namespace CookieClick
         }
 
         //                                  koekjes_klick
-        private void Koekje_Click(object sender, RoutedEventArgs e)
-        {
-            ScoreVar++;
-        }
 
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -122,6 +124,8 @@ namespace CookieClick
             KoekjeImg.Width = 130;
             //score word met 1 verhoogd
             ScoreVar++;
+            TotaalScore++;
+            CollapsButtons();
         }
 
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
@@ -169,36 +173,11 @@ namespace CookieClick
                 //    return $"{BillionValue} Billion ";
                 //return $" { number / billion:N1} billion";
             }
-            //biljart
-            //if (number >= biljart && number <= triljoen)
-            //{
-            //    double BiljartValue = Math.Round(number / biljart, 3);
-            //    LblScore.Content = $"{BiljartValue:N3} Biljart";
-            //    //    return $"{BillionValue} Billion ";
-            //    //return $" { number / billion:N1} billion";
-            //}
 
-            ////trillion
-            //if (number >= triljoen)
-            //{
-            //    double triljoenValue = Math.Round(number / triljoen, 3);
-            //    LblScore.Content = $"{triljoenValue:N3} triljoen";
-            //    //    return $"{BillionValue} Billion ";
-            //    //return $" { number / billion:N1} billion";
-            //}
-            //else if (number >= honderdDuizend)
-            //{
-            //    return $"{number / honderdDuizend:N1} Duizend";
-            //}
-            //else
-            //{
-            //    return number.ToString();
-            //}
-            //  return ScoreString;
         }
         private void UpdateFunctie()
         {
-
+          //  CollapsButtons();
             CanInvest();
             TranslateScore(ScoreVar);
             //score word afgerond en getoond in de lable Boven 
@@ -240,6 +219,45 @@ namespace CookieClick
             LblTemplePrijs.Content = prijsBerekenen(BasisPrijsTemple, TempleAantalVar); ;
             LblTempleAantal.Content = TempleAantalVar;
             TempleBtn.ToolTip = $"opbrengst per seconde: {TemplePerSeconde}"; ;
+        }
+
+        private void CollapsButtons()
+        {
+            //Cursor
+            if (TotaalScore >= BasisPrijsCursor)
+            {
+                CursorBtn.Visibility = Visibility.Visible;
+            }
+            //Grandma
+            if (TotaalScore >= BasisPrijsGrandma)
+            {
+                GrandmaBtn.Visibility = Visibility.Visible;
+            }
+            //Farm
+            if (TotaalScore >= BasisPrijsFarm)
+            {
+                FarmBtn.Visibility = Visibility.Visible;
+            }
+            //Mine
+            if (TotaalScore >= BasisPrijsMine)
+            {
+                MineBtn.Visibility = Visibility.Visible;
+            }
+            //Factory
+            if (TotaalScore >= BasisPrijsFactory)
+            {
+                FactoryBtn.Visibility = Visibility.Visible;
+            }
+            //Bank
+            if (TotaalScore >= BasisPrijsBank)
+            {
+                BankBtn.Visibility = Visibility.Visible;
+            }
+            //Temple
+            if (TotaalScore >= BasisPrijsTemple)
+            {
+                TempleBtn.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -405,7 +423,7 @@ namespace CookieClick
             //content opvragen en opslaan als nieuweBakkerijNaam
             string nieuweBakkerijNaam = Interaction.InputBox("enter new name");
 
-            if (nieuweBakkerijNaam.Trim()!="")
+            if (nieuweBakkerijNaam.Trim()   !="")
             {
                 // Update label content
                 LblBakkerijNaam.Content = nieuweBakkerijNaam;

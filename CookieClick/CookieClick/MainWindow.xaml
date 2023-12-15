@@ -34,7 +34,7 @@
         </StackPanel>
         <ScrollViewer Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto"  Margin="50,50">
         <StackPanel>
-            <Button x:Name="CursorBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="CursorBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -47,12 +47,12 @@
                     </Grid.RowDefinitions>
 
                     <Image Source="images/Cursor.png" Width="40"></Image>
-                    <Label Grid.Column="1">Cursor</Label>
+                    <Label Grid.Column="1" >Cursor</Label>
                     <Label Name="LblCursorAantal" Grid.Column="2">0</Label>
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="GrandmaBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="GrandmaBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -70,7 +70,7 @@
                     <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="FarmBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="FarmBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -89,7 +89,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="MineBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="MineBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -107,7 +107,7 @@
                     <Label Name="LblMinePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="FactoryBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="FactoryBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -125,7 +125,7 @@
                     <Label Name="LblFactoryPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="BankBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="BankBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -143,7 +143,7 @@
                     <Label Name="LblBankPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
-            <Button x:Name="TempleBtn" IsEnabled="False" Click="Button_Click">
+                <Button x:Name="TempleBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
