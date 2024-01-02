@@ -29,6 +29,82 @@
             <Label Name="LblPassiveIncomen" Foreground="Beige" HorizontalAlignment="Center" FontSize="50">0</Label>
         </StackPanel>
 
+   
+        <!--scrollviewer rond alle pannels in de eerste column staat op vertical vizible -->
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" >
+            <!--in deze stackpanel zit alles zichtbaar in column 1 -->
+            <!--main stackpanel waar een vertical scrollviewer rond zit-->
+            <StackPanel Name="MainStackPanle" Grid.Column="1">
+                <!--Cursor-->
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="auto" VerticalScrollBarVisibility="Hidden">
+
+                    <!--Cursor pannel die in de code behind word opgevuld -->
+                    <StackPanel Name="CursorPanel" Orientation="Horizontal">
+                        
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/CursorBackGround.jpg" TileMode="Tile" Stretch="None" Viewport="0,0,20,20" ViewportUnits="Absolute">
+                            </ImageBrush>
+                        </StackPanel.Background>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!--Grandma-->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal" Name="GrandmaPanel">
+
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/GrandmaBackGround.Png" TileMode="Tile" Stretch="None" Viewport="0,0,20,20" ViewportUnits="Absolute">
+                            </ImageBrush>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!--Farm-->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal" Name="FarmPanel">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/FarmBackground.png" TileMode="Tile" Stretch="None" Viewport="0,0,20,20" ViewportUnits="Absolute"></ImageBrush>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!--Mine-->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal" Name="MinePanel">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/MineBackground.png" TileMode="Tile" Stretch="None" Viewport="300,300,300,300" ViewportUnits="Absolute"></ImageBrush>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!--Factory-->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal" Name="FactoryPanel">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/GrandmaBackground.png" TileMode="Tile" Stretch="None" Viewport="300,300,300,300" ViewportUnits="Absolute"></ImageBrush>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!--Bank-->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal" Name="BankPanel">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/BankBackground.png" TileMode="Tile" Stretch="None" Viewport="0,0,10,10" ViewportUnits="Absolute"></ImageBrush>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!--Temple-->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Horizontal" Name="TemplePanel">
+                        <StackPanel.Background>
+                            <ImageBrush ImageSource="/images/GrandmaBackground.png" TileMode="Tile" Stretch="None" Viewport="0,0,50,50" ViewportUnits="Absolute"></ImageBrush>
+                        </StackPanel.Background>
+                    </StackPanel>
+                </ScrollViewer>
+
         <StackPanel Grid.Column="1">
 
         </StackPanel>

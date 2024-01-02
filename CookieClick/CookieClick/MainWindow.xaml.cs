@@ -364,42 +364,92 @@ namespace CookieClick
                     CursorAantalVar++;
                     ScoreVar -= double.Parse(LblCursorPrijs.Content.ToString());
                     PasiveIncomenVar += CursorPerSeconde;
+                    CursorPanel.Visibility = Visibility.Visible;
+                            cursorTotaalOpbrengst = cursorPerSeconde * cursorAantalVar;
+                            Image CursorImage = new Image();
+                            CursorImage.Source = new BitmapImage(new Uri("/images/Cursor.png", UriKind.Relative));
+                            CursorImage.Width = 100;
+                            CursorImage.Height = 100;
+                            CursorImage.Margin = new Thickness(5);
+                            CursorPanel.Children.Add(CursorImage);
                     break;
                 //Grandma
                 case "GrandmaBtn":
                     GrandmaAantalVar++;
                     ScoreVar -= double.Parse(LblGrandmaPrijs.Content.ToString());
                     PasiveIncomenVar += GrandmaPerSeconde;
+                            GrandmaPanel.Visibility = Visibility.Visible;
+                            Image GrandmaImage = new Image();
+                            GrandmaImage.Source = new BitmapImage(new Uri("/images/supperGrandma.png", UriKind.Relative));
+                            GrandmaImage.Width = 100;
+                            GrandmaImage.Height = 100;
+                            GrandmaImage.Margin = new Thickness(5);
+                            GrandmaPanel.Children.Add(GrandmaImage);
                     break;
                 //Farm
                 case "FarmBtn":
                     FarmAantalVar++;
                     ScoreVar -= double.Parse(LblFarmPrijs.Content.ToString());
                     PasiveIncomenVar += FarmPerSeconde;
+                            FarmPanel.Visibility = Visibility.Visible;
+                            Image FarmImage = new Image();
+                            FarmImage.Source = new BitmapImage(new Uri("/images/Farm.png", UriKind.Relative));
+                            FarmImage.Width = 100;
+                            FarmImage.Height = 100;
+                            FarmImage.Margin = new Thickness(5);
+                            FarmPanel.Children.Add(FarmImage);
                     break;
                 //Mine
                 case "MineBtn":
                     MineAantalVar++;
                     ScoreVar -= double.Parse(LblMinePrijs.Content.ToString());
                     PasiveIncomenVar += MinePerSeconde;
+                            MinePanel.Visibility = Visibility.Visible;
+                            Image MineImage = new Image();
+                            MineImage.Source = new BitmapImage(new Uri("/images/Mine.jpg", UriKind.Relative));
+                            MineImage.Width = 100;
+                            MineImage.Height = 100;
+                            MineImage.Margin = new Thickness(5);
+                            MinePanel.Children.Add(MineImage);
                     break;
                 //Factory
                 case "FactoryBtn":
                     FactoryAantalVar++;
                     ScoreVar -= double.Parse(LblFactoryPrijs.Content.ToString());
                     PasiveIncomenVar += FactoryPerSeconde;
+                            FactoryPanel.Visibility = Visibility.Visible;
+                            Image FactoryImage = new Image();
+                            FactoryImage.Source = new BitmapImage(new Uri("/images/Factory.png", UriKind.Relative));
+                            FactoryImage.Width = 100;
+                            FactoryImage.Height = 100;
+                            FactoryImage.Margin = new Thickness(5);
+                            FactoryPanel.Children.Add(FactoryImage);
                     break;
                 //Bank
                 case "BankBtn":
                     BankAantalVar++;
                     ScoreVar -= double.Parse(LblBankPrijs.Content.ToString());
                     PasiveIncomenVar += BankPerSeconde;
+                            BankPanel.Visibility = Visibility.Visible;
+                            Image BankImage = new Image();
+                            BankImage.Source = new BitmapImage(new Uri("/images/Bank.png", UriKind.Relative));
+                            BankImage.Width = 100;
+                            BankImage.Height = 100;
+                            BankImage.Margin = new Thickness(5);
+                            BankPanel.Children.Add(BankImage);
                     break;
                 //Temple
                 case "TempleBtn":
                     TempleAantalVar++;
                     ScoreVar -= double.Parse(LblTemplePrijs.Content.ToString());
                     PasiveIncomenVar += TemplePerSeconde;
+                            TemplePanel.Visibility = Visibility.Visible;
+                            Image TempleImage = new Image();
+                            TempleImage.Source = new BitmapImage(new Uri("/images/Temple.png", UriKind.Relative));
+                            TempleImage.Width = 50;
+                            TempleImage.Height = 50;
+                            TempleImage.Margin = new Thickness(5);
+                            TemplePanel.Children.Add(TempleImage);
                     break;
             }
             TranslateScore(ScoreVar);
