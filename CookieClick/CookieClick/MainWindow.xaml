@@ -128,6 +128,8 @@
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="CursorBonus" Content="Cursor Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
+                
                 <Button x:Name="GrandmaBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -146,6 +148,8 @@
                     <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="GrandmaBonus" Content="Grandma Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
+                
                 <Button x:Name="FarmBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -164,6 +168,7 @@
                     <Label Name="LblFarmPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="FarmBonus" Content="Farm Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
 
                 <Button x:Name="MineBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
@@ -183,6 +188,8 @@
                     <Label Name="LblMinePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="MineBonus" Content="Mine Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
+
                 <Button x:Name="FactoryBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -201,6 +208,8 @@
                     <Label Name="LblFactoryPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="FactoryBonus" Content="Factory Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
+
                 <Button x:Name="BankBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -219,6 +228,8 @@
                     <Label Name="LblBankPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="BankBonus" Content="Bank Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
+
                 <Button x:Name="TempleBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -237,6 +248,8 @@
                     <Label Name="LblTemplePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                 </Grid>
             </Button>
+                <Button x:Name="TempleBonus" Content="Temple Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
+             
         </StackPanel>
         </ScrollViewer>
     </Grid>
