@@ -24,6 +24,7 @@ namespace CookieClick
     public partial class MainWindow : Window
     {
         
+        int bonusPrijsVerdubbeling = 50;
         string ScoreString;
         const long million = 1000000;
         const long miljard = 1000000000;
@@ -46,34 +47,62 @@ namespace CookieClick
         private const double BasisPrijsCursor = 15;
         double CursorAantalVar;
         private const double CursorPerSeconde=0.1;
+        double cursorTotaalOpbrengst = 0;
+        double cursorBonusAantal = 0;
+        private const double cursorBonusBasisPrijs = cursorBasisPrijs*100;
+        private  double cursorBonusNieuwPrijs = 0;
 
         //Granma
         private const double BasisPrijsGrandma = 16;
         public int GrandmaAantalVar;
         private const double GrandmaPerSeconde =1.0;
 
+        double grandmaTotaalOpbrengst=0;
+        double grandmaBonusAantal = 0;
+        private const double grandmaBonusBasisPrijs = grandmaBasisPrijs * 100;
+        private double grandmaBonusNieuwPrijs = 0;
         //farm
-        private const double BasisPrijsFarm = 17;
-        public int FarmAantalVar;
-        private const double FarmPerSeconde = 8.0;
+        private const double farmBasisPrijs = 17;
+        public int farmAantalVar = 0;
+        private const double farmPerSeconde = 8;
+        double farmPerTienMiliSeconde = 0;
+        //bonus
+        double farmTotaalOpbrengst = 0;
+        double farmBonusAantal = 0;
+        private const double farmBonusBasisPrijs = farmBasisPrijs * 100;
+        private double farmBonusNieuwPrijs = 0;
+
         //Mine
         private const double BasisPrijsMine = 18;
         public int MineAantalVar;
         private const double MinePerSeconde = 47.0;
+        //bonus 
+        double mineBonusAantal = 0;
+        private const double mineBonusBasisPrijs = mineBasisPrijs * 100;
+        private double mineBonusNieuwPrijs = 0;
 
         //Factory
         private const double BasisPrijsFactory = 19;
         public int FactoryAantalVar;
         private const double FactoryPerSeconde =260.0;
+        double factoryBonusAantal = 0;
+        private const double factoryBonusBasisPrijs = factoryBasisPrijs * 100;
+        private double factoryBonusNieuwPrijs = 0;
 
         //Bank
         private const double BasisPrijsBank = 20;
         public int BankAantalVar;
         private const double BankPerSeconde =1400.0;
+        double bankBonusAantal = 0;
+        private const double bankBonusBasisPrijs = bankBasisPrijs * 100;
+        private double bankBonusNieuwPrijs = 0;
         //Temple
         private const double BasisPrijsTemple = 21;
         public int TempleAantalVar;
         private const double TemplePerSeconde =7800.0;
+        double templeBonusAantal = 0;
+        private const double templeBonusBasisPrijs = templeBasisPrijs * 100;
+        private double templeBonusNieuwPrijs = 0;
 
         /// <summary>
         /// nieuwe timer word gedeclareerd 
@@ -264,6 +293,8 @@ namespace CookieClick
         /// deze functie gaat kijken of ik genoeg koekjes heb om te investering, zodra deze genoeg is word button 
         /// enabled of indien niet genoeg word de button disabled, de basisprijs en het aantal keer gekocht word 
         /// megegeven als parameter om de nieuwe prijs te berekenen en returnt de nieuwprijs
+            CanBuyFirstBonus();
+            CanBuySecondBonus();
         /// </summary>
         private void CanInvest()
         {
@@ -349,6 +380,223 @@ namespace CookieClick
                 TempleBtn.IsEnabled = true;
                 LblTemplePrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
+            ShowButtons();
+            CanBuyFirstBonus();
+        }
+        private void CanBuyFirstBonus()
+        {
+            //cursor
+            if (scoreVar > cursorBonusBasisPrijs)
+            {
+                CursorBonus.Visibility = Visibility.Visible;
+            }
+            else if (scoreVar < cursorBonusBasisPrijs)
+            {
+                CursorBonus.Visibility=Visibility.Collapsed ;
+            }
+            //grandma
+            if (scoreVar > grandmaBonusBasisPrijs)
+            {
+                GrandmaBonus.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                GrandmaBonus.Visibility = Visibility.Collapsed;
+            } 
+            //farm
+            if (scoreVar > farmBonusBasisPrijs)
+            {
+                FarmBonus.Visibility=Visibility.Visible;
+            }
+            else 
+            {
+                FarmBonus.Visibility = Visibility.Collapsed;
+            } 
+            //mine
+            if (scoreVar > mineBonusBasisPrijs)
+            {
+                MineBonus.Visibility = Visibility.Visible;
+            }
+            else 
+            {
+                MineBonus.Visibility = Visibility.Collapsed;
+            }
+            //factory
+            if (scoreVar > factoryBonusBasisPrijs)
+            {
+                FactoryBonus.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                FactoryBonus.Visibility = Visibility.Collapsed;
+            }
+            //bank
+            if (scoreVar > bankBonusBasisPrijs)
+            {
+                BankBonus.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BankBonus.Visibility = Visibility.Collapsed;
+            }
+            //temple
+            if (scoreVar > templeBonusBasisPrijs)
+            {
+                TempleBonus.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                TempleBonus.Visibility = Visibility.Collapsed;
+            }
+        }
+        private double SecondBonus(double basisPrijs,double verdubbeling)
+        {
+                return basisPrijs* verdubbeling;
+        }
+
+        private void CanBuySecondBonus()
+        {
+            //cursor
+            if (scoreVar > cursorBonusNieuwPrijs)
+            {
+                CursorBonus.IsEnabled = true;
+            }
+            else if (scoreVar < cursorBonusNieuwPrijs)
+            {
+                CursorBonus.IsEnabled = false;
+            }
+            //grandma
+            if (scoreVar > grandmaBonusNieuwPrijs)
+            {
+                GrandmaBonus.IsEnabled = true;
+            }
+            else if (scoreVar < grandmaBonusNieuwPrijs)
+            {
+                GrandmaBonus.IsEnabled = false;
+            }
+            //farm
+            if (scoreVar > farmBonusNieuwPrijs)
+            {
+                FarmBonus.IsEnabled = true;
+            }
+            else if (scoreVar < farmBonusNieuwPrijs)
+            {
+                FarmBonus.IsEnabled = false;
+            }
+            //mine
+            if (scoreVar > mineBonusNieuwPrijs)
+            {
+                MineBonus.IsEnabled = true;
+            }
+            else if (scoreVar < mineBonusNieuwPrijs)
+            {
+                MineBonus.IsEnabled = false;
+            }
+            //factory
+            if (scoreVar > factoryBonusNieuwPrijs)
+            {
+                FactoryBonus.IsEnabled = true;
+            }
+            else if (scoreVar < factoryBonusNieuwPrijs)
+            {
+                FactoryBonus.IsEnabled = false;
+            }
+            //bank 
+            if (scoreVar > bankBonusNieuwPrijs)
+            {
+                BankBonus.IsEnabled = true;
+            }
+            else if (scoreVar < bankBonusNieuwPrijs)
+            {
+                BankBonus.IsEnabled = false;
+            }
+            //temple 
+            if (scoreVar > templeBonusNieuwPrijs)
+            {
+                TempleBonus.IsEnabled = true;
+            }
+            else if (scoreVar < templeBonusNieuwPrijs)
+            {
+                TempleBonus.IsEnabled = false;
+            }
+        }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Bonus_Click(object sender, RoutedEventArgs e)
+        {
+            string BtnName = (sender as Button).Name;
+            //for (cursoraantalBonus = 0; cursoraantalBonus < 5; vermenigVuldiging *= 2)
+            switch (BtnName)
+            {
+                case "CursorBonus":
+                    cursorBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    //krijg ik de prijs terug na verdubbeling 
+                    cursorBonusNieuwPrijs = SecondBonus(cursorBasisPrijs, bonusPrijsVerdubbeling);
+                    //kijken of ik kan kopen of niet 
+                  //  CanBuySecondBonus();
+                    //passieveInkomenVar -= totaalOpbrengstCursor;
+                    //passieveInkomenVar += totaalOpbrengstCursor * vermenigVuldiging;
+                    //cursorPerSeconde = cursorPerSeconde * vermenigVuldiging;
+
+                    break;
+
+                case "GrandmaBonus":
+                    grandmaBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    grandmaBonusNieuwPrijs = SecondBonus(grandmaBasisPrijs, bonusPrijsVerdubbeling);
+                    //CanBuySecondBonus();
+                    //passieveInkomenVar -= totaalOpbrengstGrandma;
+                    //passieveInkomenVar += totaalOpbrengstGrandma * vermenigVuldiging;
+                    //grandmaPerSeconde *= vermenigVuldiging;
+                    break;
+
+                case "FarmBonus":
+                    farmBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    farmBonusNieuwPrijs = SecondBonus(farmBasisPrijs, bonusPrijsVerdubbeling);
+                    //CanBuySecondBonus();
+                    //bonus = scoreVar += (farmPerSeconde * farmAantalVar) * vermenigVuldiging;
+                    //vermenigVuldiging *= 2;
+
+                    break;
+
+                case "MineBonus":
+                    mineBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    mineBonusNieuwPrijs = SecondBonus(mineBasisPrijs, bonusPrijsVerdubbeling);
+                    //CanBuySecondBonus();
+                    //bonus = scoreVar += (minePerSeconde * mineAantalVar) * vermenigVuldiging;
+                    //vermenigVuldiging *= 2;
+                    break;
+
+                case "FactoryBonus":
+                    factoryBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    factoryBonusNieuwPrijs = SecondBonus(factoryBasisPrijs, bonusPrijsVerdubbeling);
+                    //bonus = scoreVar += (factoryPerSeconde * factoryAantalVar) * vermenigVuldiging;
+                    //vermenigVuldiging *= 2;
+                    break;
+
+                case "BankBonus":
+                    bankBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    bankBonusNieuwPrijs = SecondBonus(bankBasisPrijs, bonusPrijsVerdubbeling);
+                    //bonus = scoreVar += (bankPerSeconde * bankAantalVar) * vermenigVuldiging;
+                    //vermenigVuldiging *= 2;
+                    break;
+
+                case "TempleBonus":
+                    templeBonusAantal++;
+                    bonusPrijsVerdubbeling *= 10;
+                    templeBonusNieuwPrijs = SecondBonus(templeBasisPrijs, bonusPrijsVerdubbeling);
+                    //bonus = scoreVar += (templePerSeconde * templeAantalVar) * vermenigVuldiging;
+                    //vermenigVuldiging *= 2;
+                    break;
+
         }
 
         // voor elke button geld het zelfde principe, dus elke button luistert naar een event 
