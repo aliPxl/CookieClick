@@ -569,7 +569,7 @@ namespace CookieClick
                     
                     vermenigVuldiging *= 2;
                     passieveInkomenVar -= mineTotaalOpbrengst;
-                    passieveInkomenVar += mineTotaalOpbrengst;
+                    passieveInkomenVar += mineTotaalOpbrengst*vermenigVuldiging;
                     minePerSeconde *= vermenigVuldiging;
                     break;
 
@@ -579,7 +579,7 @@ namespace CookieClick
 
                     vermenigVuldiging *= 2;
                     passieveInkomenVar -= factoryTotaalOpbrengst;
-                    passieveInkomenVar += factoryTotaalOpbrengst;
+                    passieveInkomenVar += factoryTotaalOpbrengst *vermenigVuldiging;
                     factoryPerSeconde *= vermenigVuldiging;
                     break;
 
@@ -589,7 +589,7 @@ namespace CookieClick
 
                     vermenigVuldiging *= 2;
                     passieveInkomenVar -= bankTotaalOpbrengst;
-                    passieveInkomenVar += bankTotaalOpbrengst;
+                    passieveInkomenVar += bankTotaalOpbrengst * vermenigVuldiging;
                     bankPerSeconde *= vermenigVuldiging;
                     break;
 
@@ -599,7 +599,7 @@ namespace CookieClick
 
                     vermenigVuldiging *= 2;
                     passieveInkomenVar -= templeTotaalOpbrengst;
-                    passieveInkomenVar += templeTotaalOpbrengst;
+                    passieveInkomenVar += templeTotaalOpbrengst * vermenigVuldiging;
                     templePerSeconde*= vermenigVuldiging;
                     break;
 
