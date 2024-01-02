@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Numerics;
 using Microsoft.VisualBasic;
+using System.Diagnostics;
 
 namespace CookieClick
 {
@@ -23,44 +24,66 @@ namespace CookieClick
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        // scorevar gaat omhoog bij elke klik of en omlaag bij elke investering 
+        double scoreVar = 0;
+        //totaalScore gaat alleen omhoog, dit is om de buttons die collapsed zijn visible te maken wanneer ze ooit x aantal koekjes hebben gehaald 
+        double totaalScore = 0;
+        //het inkomen dat de speler verdiend per seconde, deze gaat ook alleen omhoog per klik op een investering 
+        double passieveInkomenVar = 0;
+        // opbrengst is wat de speler krijgt per 10 milliseconde deze word uiteindelijk in de update functie aan scoreVar toegevoegd
+        double opbrengst =0;
+        //
+        double vermenigVuldiging = 1;
+        //dit is bonus prijs verdubbeling na de eerste klik op bonus standaard 50 maar bij elke klik gaat deze maal 10 omhoogh  
         int bonusPrijsVerdubbeling = 50;
+        //als de score kleiner is dan 1million maar groter dan duizend word de score terug gegeven met een spatie tussen de honderd en duizend tal 
         string ScoreString;
-        const long million = 1000000;
-        const long miljard = 1000000000;
-        const long billion = 1000000000000;
-        const long biljart = 1000000000000000;
-        BigInteger triljoen = BigInteger.Parse("1000000000000000000");
-            //1000000000000000000;
-
-        const long honderdDuizend = 10000; 
-
+        //deze worden gebruikt in VertaalScore() 
+        const double Duizend = 1000;
+        const double million = 1000000;
+        const double miljard = 1000000000;
+        const double billion = 1000000000000;
+        const double biljart = 1000000000000000;
+        const double triljoen = 1000000000000000000;
+        //1000000000000000000;
+        //timer die ik oproep in mainwindow 
         DispatcherTimer timer;
-     ///   double ScoreVar = 1025643;
-        double ScoreVar = 0;
-        double TotaalScore = 0;
-        //double ScoreVar = 0;
-        int ButtonClicked = 0;
-        double PasiveIncomenVar = 0;
+
+//voor ele button hou ik een aantal variable bij 
+
+         // de basis prijs 
+         // het aantal keer dat deze investering is gekocht 
+         // het aantal koekjes per seconde dat deze oplevert 
+         // het aantal koekjes per 10 miliseconde dat deze oplevert(dit word later berekend cookies per seconde /100 )
+
+            //bonus 
+          //totale opbrengst van de investering 
+         // eerste prijs bonus button basisprijs maal 100
+         // nieuwe prijs deze word berekend nadat er op een bonus is geklikt
+
         //                                               BUTTONS
         //cursor
-        private const double BasisPrijsCursor = 15;
-        double CursorAantalVar;
-        private const double CursorPerSeconde=0.1;
+        private const double cursorBasisPrijs = 15;
+        double cursorAantalVar = 0;
+        double cursorPerSeconde = 0.1;
+        double cursorPerTienMiliSeconde = 0;
+       //bonus
         double cursorTotaalOpbrengst = 0;
-        double cursorBonusAantal = 0;
         private const double cursorBonusBasisPrijs = cursorBasisPrijs*100;
         private  double cursorBonusNieuwPrijs = 0;
 
-        //Granma
-        private const double BasisPrijsGrandma = 16;
-        public int GrandmaAantalVar;
-        private const double GrandmaPerSeconde =1.0;
 
+
+        //Grandma
+        private const double grandmaBasisPrijs = 16;
+        public int grandmaAantalVar = 0;
+        private double grandmaPerSeconde = 1;
+        double grandmaPerTienMiliSeconde = 0;
+        //bonus
         double grandmaTotaalOpbrengst=0;
-        double grandmaBonusAantal = 0;
         private const double grandmaBonusBasisPrijs = grandmaBasisPrijs * 100;
         private double grandmaBonusNieuwPrijs = 0;
+
         //farm
         private const double farmBasisPrijs = 17;
         public int farmAantalVar = 0;
@@ -68,239 +91,296 @@ namespace CookieClick
         double farmPerTienMiliSeconde = 0;
         //bonus
         double farmTotaalOpbrengst = 0;
-        double farmBonusAantal = 0;
         private const double farmBonusBasisPrijs = farmBasisPrijs * 100;
         private double farmBonusNieuwPrijs = 0;
 
         //Mine
-        private const double BasisPrijsMine = 18;
-        public int MineAantalVar;
-        private const double MinePerSeconde = 47.0;
+        private const double mineBasisPrijs = 18;
+        public int mineAantalVar = 0;
+        private const double minePerSeconde = 47;
+        double minePerTienMiliSeconde = 0;
         //bonus 
-        double mineBonusAantal = 0;
+        double mineTotaalOpbrengst = 0;
         private const double mineBonusBasisPrijs = mineBasisPrijs * 100;
         private double mineBonusNieuwPrijs = 0;
 
         //Factory
-        private const double BasisPrijsFactory = 19;
-        public int FactoryAantalVar;
-        private const double FactoryPerSeconde =260.0;
-        double factoryBonusAantal = 0;
+        private const double factoryBasisPrijs = 19;
+        public int factoryAantalVar = 0;
+        private const double factoryPerSeconde = 260;
+        double factoryPerTienMiliSeconde = 0;
+        //bonus
+        double   factoryTotaalOpbrengst = 0;
         private const double factoryBonusBasisPrijs = factoryBasisPrijs * 100;
         private double factoryBonusNieuwPrijs = 0;
 
         //Bank
-        private const double BasisPrijsBank = 20;
-        public int BankAantalVar;
-        private const double BankPerSeconde =1400.0;
-        double bankBonusAantal = 0;
+        private const double bankBasisPrijs = 20;
+        public int bankAantalVar = 0;
+        private const double bankPerSeconde = 1400;
+        double bankPerTienMiliSeconde = 0;
+        //bonus 
+        double bankTotaalOpbrengst = 0;
         private const double bankBonusBasisPrijs = bankBasisPrijs * 100;
         private double bankBonusNieuwPrijs = 0;
+
         //Temple
-        private const double BasisPrijsTemple = 21;
-        public int TempleAantalVar;
-        private const double TemplePerSeconde =7800.0;
-        double templeBonusAantal = 0;
+        private const double templeBasisPrijs = 21;
+        public int templeAantalVar = 0;
+        private const double templePerSeconde = 7800;
+        double templePerTienMiliSeconde = 0;
+        //bonus 
+        double templeTotaalOpbrengst = 0;
         private const double templeBonusBasisPrijs = templeBasisPrijs * 100;
         private double templeBonusNieuwPrijs = 0;
 
-        /// <summary>
-        /// nieuwe timer word gedeclareerd 
+/// <summary>
+        /// <para>
+        /// nieuwe timer word gestart op 10 ms</para>
+        /// <para>(investeringen)pertienmiliseconde worden berekend altijd dinamic</para>
+        /// <para>stackpanel zichtbare investeringen worden allemaal collapsed</para>
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-           
+
+            //opbrengst per 10 milliseconde is gelijk aan opbrengst per seconde / 100
+            //en omdat cursor per seconde kan veranderen bij bijvoorbeeld bunus is dit meer dinamic
+            cursorPerTienMiliSeconde = cursorPerSeconde / 100;
+            grandmaPerTienMiliSeconde = grandmaPerSeconde / 100;
+            farmPerTienMiliSeconde = farmPerSeconde / 100;
+            minePerTienMiliSeconde = minePerSeconde / 100;
+            factoryPerTienMiliSeconde = factoryPerSeconde / 100;
+            bankPerTienMiliSeconde = bankPerSeconde / 100;
+            templePerTienMiliSeconde = templePerSeconde / 100;
+            //timer word gestart die iedere 10 seconde iets doet 
             timer = new DispatcherTimer();
             timer.Tick += TickerUpdate;
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Start();
+            // alle stackpannels(direction horizontal) die bij elke klik mijn investeringen representeren zijn standaard collapsed
+            // tot er op een button/investering word geklikt 
+            CursorPanel.Visibility = Visibility.Collapsed;
+            GrandmaPanel.Visibility = Visibility.Collapsed;
+            FarmPanel.Visibility = Visibility.Collapsed;
+            MinePanel.Visibility = Visibility.Collapsed;
+            FactoryPanel.Visibility = Visibility.Collapsed;
+            BankPanel.Visibility = Visibility.Collapsed;
+            TemplePanel.Visibility = Visibility.Collapsed;
 
-            timer = new DispatcherTimer();
-            timer.Tick += PassiveIncome;
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Start();
-
-      
-        }
-        //TickerUpdate word om de 10 miliseconde gedaan
-        private void TickerUpdate(object sender, EventArgs e)
-        {
-            // ScoreVar += alle verschillende passive inkomsten;
-
-            //for elke soort inkomsten
-            //    verhoog score op basis van hoeveelheid cursors/grandmas/... * inkomst van cursor/grandmas/...
-
-            UpdateFunctie();
         }
 
-        private void PassiveIncome(object sender, EventArgs e)
-        {
-            // ScoreVar += alle verschillende passive inkomsten;
-
-            //for elke soort inkomsten
-            //    verhoog score op basis van hoeveelheid cursors/grandmas/... * inkomst van cursor/grandmas/...
-            ScoreVar += PasiveIncomenVar;
-            LblPassiveIncomen.Content = $"+{PasiveIncomenVar}";
-            UpdateFunctie();
-        }
-
-        //                                  koekjes_klick
-
+/// <summary>
+        /// <para>dit is de mouse_down event voor het koekje</para>
+        /// <para>koekje word even kleiner</para>
+        /// <para>scorevar word met 1 verhoogd</para>
+        /// <para>totaalScore word met 1 verhoogd</para>
+        /// </summary>
         private void KoekjeImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //koekje word kleiner 
             KoekjeImg.Width = 130;
             //score word met 1 verhoogd
-            ScoreVar++;
-            TotaalScore++;
-            CollapsButtons();
+            scoreVar++;
+            //totaalscore word met 1 verhoogd
+            totaalScore++;
         }
 
+/// <summary>
+        /// zowel bij mouse_up als mouse_Leave krijgt het koekje de originele grote 
+        /// </summary>
         private void KoekjeImg_MouseUp(object sender, MouseButtonEventArgs e)
         {
             KoekjeImg.Width = 150;
         }
-
         private void KoekjeImg_MouseLeave(object sender, MouseEventArgs e)
         {
             KoekjeImg.Width = 150;
         }
 
-        private void  TranslateScore(double number)
+/// <summary>
+        /// deze functie roept eigeinlijk om de 10 miliseconde de update functie op 
+        /// </summary>
+        private void TickerUpdate(object sender, EventArgs e)
         {
-            LblScore.Content = Math.Round(Math.Ceiling(ScoreVar), 1);
-            //double Million = 1000000;
-            //double HonderdDuizend = 10000;
-             ScoreString = ScoreVar.ToString();
-            //honderdduizend
-            if (number >= honderdDuizend && number <= million)
-            {
-                ScoreString = ScoreString.Insert(2, " ");
-                LblScore.Content= ScoreString;
-            }
-            //milion
-            if (number >= million && number <= miljard)
-            {
-                ScoreString = ScoreString.Insert(2, " ");
-                double  millionValue = Math.Round( number / million,3);
-                LblScore.Content=$"{millionValue:N3} million";
-            }
-            //miljard
-            if (number >= miljard && number <= billion)
-            {
-                double miljardValue = Math.Round(number / miljard, 2);
-                LblScore.Content = $"{miljardValue:N3} Miljard";
-                //    return $"{BillionValue} Billion ";
-                //return $" { number / billion:N1} billion";
-            }
-            //billion
-            if (number >= billion && number <= biljart)
-            {
-                double BillionValue = Math.Round(number / billion, 3);
-                LblScore.Content = $"{BillionValue:N3} Billion";
-                //    return $"{BillionValue} Billion ";
-                //return $" { number / billion:N1} billion";
-            }
-
+            UpdateFunctie();
         }
+
+/// <summary>
+        /// updateFunctie doet een berekening van ale scores  en een update van alle scores /content in de hele applicate
+        /// <para>boven elke regel in deze functie  word er meer uitleg gegeven over wat elke regel precies doet </para>
+        /// </summary>
         private void UpdateFunctie()
         {
-          //  CollapsButtons();
+            //ScoreVar += PasiveIncomenVar;
+            //TotaalScore += PasiveIncomenVar;
+
+
+            //investeringen worden pas zichtbaar als er genoeg koekjes zijn
+            ShowButtons();
+            //kan ik investeren worden buttons enabled or disabled
             CanInvest();
-            TranslateScore(ScoreVar);
-            //score word afgerond en getoond in de lable Boven 
-            //LblScore.Content = Math.Round(ScoreVar, 1);
-            //LblScore.Content = Math.Round( Math.Ceiling(ScoreVar),1);
-       //     double afgekapt = Math.Round(double.Parse(TranslateScore(ScoreVar)));
-           // MW.Title = TranslateScore(ScoreVar);
-            // = TranslateScore(ScoreVar);
-            LblPassiveIncomen.Content =$"+ {Math.Round(PasiveIncomenVar, 2)}";
-           // MW.Title = Math.Round(double.Parse(TranslateScore(ScoreVar))).ToString();
+            //standaard zijn bonussen colapsed, indien genoeg koekjes worder deze wel zichtbaar 
+            CanBuyFirstBonus();
+            //eens de bonussen zichtbaar zijn maar er geen genoeg koekjes zijn om te kopen word de knop disabled 
+            CanBuySecondBonus();
 
 
-            //nieuwe button !!!!!!!!!!!!!!
-            //cursor        prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblCursorPrijs.Content = prijsBerekenen(BasisPrijsCursor, CursorAantalVar);
-            LblCursorAantal.Content = CursorAantalVar;
-            CursorBtn.ToolTip =$"opbrengst per seconde: {CursorPerSeconde}";
-            //Grandma       prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblGrandmaPrijs.Content = prijsBerekenen(BasisPrijsGrandma, GrandmaAantalVar);
-            LblGrandmaAantal.Content = GrandmaAantalVar;
-            GrandmaBtn.ToolTip = $"opbrengst per seconde: {GrandmaPerSeconde}";  
-            //farm          prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblFarmPrijs.Content = prijsBerekenen(BasisPrijsFarm, FarmAantalVar); ;
-            LblFarmAantal.Content = FarmAantalVar;
-            FarmBtn.ToolTip = $"opbrengst per seconde: {FarmPerSeconde}";
-            //Mine          prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblMinePrijs.Content = prijsBerekenen(BasisPrijsMine, MineAantalVar); ;
-            LblMineAantal.Content = MineAantalVar;
-            MineBtn.ToolTip = $"opbrengst per seconde: {MinePerSeconde}"; ;
-            //Factory          prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblFactoryPrijs.Content = prijsBerekenen(BasisPrijsFactory, FactoryAantalVar); ;
-            LblFactoryAantal.Content = FactoryAantalVar;
-            FactoryBtn.ToolTip = $"opbrengst per seconde: {FactoryPerSeconde}"; ;
-            //Bank          prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblBankPrijs.Content = prijsBerekenen(BasisPrijsBank, BankAantalVar); ;
-            LblBankAantal.Content = BankAantalVar;
-            BankBtn.ToolTip= $"opbrengst per seconde: {BankPerSeconde}"; ;
-            //Temple          prijs in de button word eerst berekend en opgevuld, en aantal keren gekocht 
-            LblTemplePrijs.Content = prijsBerekenen(BasisPrijsTemple, TempleAantalVar); ;
-            LblTempleAantal.Content = TempleAantalVar;
-            TempleBtn.ToolTip = $"opbrengst per seconde: {TemplePerSeconde}"; ;
+            //bij elke klik op een investering word de (opbrengst per 10 miliseconde)opgeslagen in de variable opbrengst
+            //deze word hieronder zowel bij de score !!!!!!!!!!!!!!!!!!!als bij de totaalscore opgeteld
+            scoreVar+=opbrengst;
+
+            //als dat is berekend laat ik dit afgerond naar boven aan de gebruiker zien in mijn lblScore lable boven het koekje 
+            LblScore.Content = VertaalScore(Math.Ceiling(Math.Round(scoreVar)));
+
+            //ook word de score geupdate in de tietel van het scherm
+            MW.Title = VertaalScore(Math.Ceiling(Math.Round(scoreVar)));
+
+            //heir laat ik aan de gebruiker zien hoeeel hij passief (per seconde) verdient
+            LblPassiveIncomen.Content = VertaalScore(passieveInkomenVar);
+
+///hier word de inhoud van elke button geupdate 
+            ///1. prijs word berekend door prijsBerekenen(basisprijs,aantal) deze functie geeft een return value en dat word mijn nieuwe prijs 
+            ///2. aantal keer gekocht word ook geupdate 
+            ///3. tooltip die laat zien hoeveel cookies per seconde deze investering oplevert
+
+            //cursor       
+            LblCursorPrijs.Content = VertaalScore(prijsBerekenen(cursorBasisPrijs, cursorAantalVar));
+            LblCursorAantal.Content = cursorAantalVar;
+            CursorBtn.ToolTip = $"opbrengst per seconde: {cursorPerSeconde}";
+
+            //Grandma      
+            LblGrandmaPrijs.Content = VertaalScore(prijsBerekenen(grandmaBasisPrijs, grandmaAantalVar));
+            LblGrandmaAantal.Content = grandmaAantalVar;
+            GrandmaBtn.ToolTip = $"opbrengst per seconde: {grandmaPerSeconde}";
+
+            //farm          
+            LblFarmPrijs.Content = VertaalScore(prijsBerekenen(farmBasisPrijs, farmAantalVar));
+            LblFarmAantal.Content = farmAantalVar;
+            FarmBtn.ToolTip = $"opbrengst per seconde: {farmPerSeconde}";
+
+            //Mine          
+            LblMinePrijs.Content = VertaalScore(prijsBerekenen(mineBasisPrijs, mineAantalVar));
+            LblMineAantal.Content = mineAantalVar;
+            MineBtn.ToolTip = $"opbrengst per seconde: {minePerSeconde}";
+
+            //Factory  
+            LblFactoryPrijs.Content = VertaalScore(prijsBerekenen(factoryBasisPrijs, factoryAantalVar));
+            LblFactoryAantal.Content = factoryAantalVar;
+            FactoryBtn.ToolTip = $"opbrengst per seconde: {factoryPerSeconde}";
+
+            //Bank         
+            LblBankPrijs.Content = VertaalScore(prijsBerekenen(bankBasisPrijs, bankAantalVar));
+            LblBankAantal.Content = bankAantalVar;
+            BankBtn.ToolTip = $"opbrengst per seconde: {bankPerSeconde}";
+
+            //Temple        
+            LblTemplePrijs.Content = VertaalScore(prijsBerekenen(templeBasisPrijs, templeAantalVar));
+            LblTempleAantal.Content = templeAantalVar;
+            TempleBtn.ToolTip = $"opbrengst per seconde: {templePerSeconde}";
         }
 
-        private void CollapsButtons()
+/// <summary>
+        /// in deze functie vertaal ik het getal dat binnenkomt, 
+        /// <para>als het getal boven de trillion ligt  komt het triljoental gevolgd door </para>
+        /// <para>als het getal boven de biljart ligt  maar onder trillion komt het biljarttal gevolgd door 3 cijfers na de komma </para>
+        /// <para>als het getal onder de million ligt maar boven de duizend krijgen een spatie tussen de honderd en duizendtallen</para>
+        /// <para>alles onder  de duizend word gewoon gereturned als een string </para>
+        /// </summary>
+        /// <param name="score"> dit is het getal dat ik binnen krijg,(investering prijs,score,passiveincome)</param>
+        /// <returns>de score in string vorm met eventueel million ect...</returns>
+        private string VertaalScore(double score)
+        {
+            if (score >= triljoen)
+            {
+                double triljoenValue = Math.Round(score / triljoen, 3);
+                return $"{triljoenValue:N3} triljoen";
+            }
+
+            if (score >= biljart && score<triljoen)
+            {
+                double biljartValue = Math.Round(score / biljart,3);
+                return $"{biljartValue:N3} biljart";
+            } 
+            
+            if (score >= billion && score<biljart)
+            {
+                double billionValue = Math.Round(score / billion,3);
+                return $"{billionValue:N3} billion";
+            }
+
+            if (score >= miljard && score<billion)
+            {
+                double miljardValue = Math.Round(score / miljard,3);
+                return $"{miljardValue:N3} miljard";
+            }
+
+            if (score >= million && score<miljard)
+            {
+                double millionValue = Math.Round(score / million,3);
+                return $"{millionValue:N3} million";
+            }
+
+            if (score >= Duizend && score < million)
+            {
+                ScoreString = score.ToString().Insert(2, " ");
+                return ScoreString;
+            }
+
+            return $"{score}";
+        }
+        
+/// <summary>
+        /// <para>in ShowButtons kijk ik of mijn totaalScore *(komt alleen maar bij gaat niks vanaf)* groter is dan basisPrijs van investeringen</para>
+        /// <para> indien er in totaal genoeg koekjes zijn verzameld word de aankoop pas zichtbaar </para>
+        /// </summary>
+        private void ShowButtons()
         {
             //Cursor
-            if (TotaalScore >= BasisPrijsCursor)
+            if (totaalScore >= cursorBasisPrijs || scoreVar >= cursorBasisPrijs)
             {
                 CursorBtn.Visibility = Visibility.Visible;
             }
             //Grandma
-            if (TotaalScore >= BasisPrijsGrandma)
+            if (totaalScore >= grandmaBasisPrijs || scoreVar >= grandmaBasisPrijs)
             {
                 GrandmaBtn.Visibility = Visibility.Visible;
             }
             //Farm
-            if (TotaalScore >= BasisPrijsFarm)
+            if (totaalScore >= farmBasisPrijs || scoreVar >= farmBasisPrijs)
             {
                 FarmBtn.Visibility = Visibility.Visible;
             }
             //Mine
-            if (TotaalScore >= BasisPrijsMine)
+            if (totaalScore >= mineBasisPrijs || scoreVar >= mineBasisPrijs)
             {
                 MineBtn.Visibility = Visibility.Visible;
             }
             //Factory
-            if (TotaalScore >= BasisPrijsFactory)
+            if (totaalScore >= factoryBasisPrijs || scoreVar >= factoryBasisPrijs)
             {
                 FactoryBtn.Visibility = Visibility.Visible;
             }
             //Bank
-            if (TotaalScore >= BasisPrijsBank)
+            if (totaalScore >= bankBasisPrijs || scoreVar >= bankBasisPrijs)
             {
                 BankBtn.Visibility = Visibility.Visible;
             }
             //Temple
-            if (TotaalScore >= BasisPrijsTemple)
+            if (totaalScore >= templeBasisPrijs || scoreVar >= templeBasisPrijs)
             {
                 TempleBtn.Visibility = Visibility.Visible;
             }
         }
-
-        /// <summary>
-        /// deze functie gaat kijken of ik genoeg koekjes heb om te investering, zodra deze genoeg is word button 
-        /// enabled of indien niet genoeg word de button disabled, de basisprijs en het aantal keer gekocht word 
-        /// megegeven als parameter om de nieuwe prijs te berekenen en returnt de nieuwprijs
-            CanBuyFirstBonus();
-            CanBuySecondBonus();
+        
+/// <summary>
+        /// in CanInvest ga ik kijken op basis van mijn score (gaat omhoog of omlaag)
+        /// heb ik genoeg koekjes om te investeren dan word mijn button enabled, anders disabled 
         /// </summary>
         private void CanInvest()
         {
-           
             //Cursor
-            if (prijsBerekenen(BasisPrijsCursor, CursorAantalVar) > ScoreVar)
+            if (prijsBerekenen(cursorBasisPrijs, cursorAantalVar) > scoreVar)
             {
                 CursorBtn.IsEnabled = false;
                 LblCursorPrijs.Foreground = new SolidColorBrush(Colors.Red);
@@ -310,9 +390,9 @@ namespace CookieClick
                 CursorBtn.IsEnabled = true;
                 LblCursorPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
-            //Grandma
 
-            if (prijsBerekenen(BasisPrijsGrandma, GrandmaAantalVar) > ScoreVar)
+            //Grandma
+            if (prijsBerekenen(grandmaBasisPrijs, grandmaAantalVar) > scoreVar)
             {
                 GrandmaBtn.IsEnabled = false;
                 LblGrandmaPrijs.Foreground = new SolidColorBrush(Colors.Red);
@@ -322,8 +402,9 @@ namespace CookieClick
                 GrandmaBtn.IsEnabled = true;
                 LblGrandmaPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
+
             //Farm
-            if (prijsBerekenen(BasisPrijsFarm, FarmAantalVar) > ScoreVar)
+            if (prijsBerekenen(farmBasisPrijs, farmAantalVar) > scoreVar)
             {
                 FarmBtn.IsEnabled = false;
                 LblFarmPrijs.Foreground = new SolidColorBrush(Colors.Red);
@@ -333,20 +414,21 @@ namespace CookieClick
                 FarmBtn.IsEnabled = true;
                 LblFarmPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
+
             //Mine
-            if (prijsBerekenen(BasisPrijsMine, MineAantalVar) > ScoreVar)
+            if (prijsBerekenen(mineBasisPrijs, mineAantalVar) > scoreVar)
             {
                 MineBtn.IsEnabled = false;
                 LblMinePrijs.Foreground = new SolidColorBrush(Colors.Red);
-            }      
-            else   
-            {      
+            }
+            else
+            {
                 MineBtn.IsEnabled = true;
                 LblMinePrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
 
             //Factory
-            if (prijsBerekenen(BasisPrijsFactory, FactoryAantalVar) > ScoreVar)
+            if (prijsBerekenen(factoryBasisPrijs, factoryAantalVar) > scoreVar)
             {
                 FactoryBtn.IsEnabled = false;
                 LblFactoryPrijs.Foreground = new SolidColorBrush(Colors.Red);
@@ -358,7 +440,7 @@ namespace CookieClick
             }
 
             //Bank
-            if (prijsBerekenen(BasisPrijsBank, BankAantalVar) > ScoreVar)
+            if (prijsBerekenen(bankBasisPrijs, bankAantalVar) > scoreVar)
             {
                 BankBtn.IsEnabled = false;
                 LblBankPrijs.Foreground = new SolidColorBrush(Colors.Red);
@@ -370,7 +452,7 @@ namespace CookieClick
             }
 
             //Temple
-            if (prijsBerekenen(BasisPrijsTemple, TempleAantalVar) > ScoreVar)
+            if (prijsBerekenen(templeBasisPrijs, templeAantalVar) > scoreVar)
             {
                 TempleBtn.IsEnabled = false;
                 LblTemplePrijs.Foreground = new SolidColorBrush(Colors.Red);
@@ -380,13 +462,16 @@ namespace CookieClick
                 TempleBtn.IsEnabled = true;
                 LblTemplePrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
-            ShowButtons();
-            CanBuyFirstBonus();
         }
+
+/// <summary>
+        /// <para>voor de eerste bonus word gekeken naar de basisprijs van elke bonus, deze is bovenaan al berekend basisprijs x100 </para>
+        /// <para>bij genoeg koekjes word bonus zichtbaar, anders blijft de bonus button collapsed </para>
+        /// </summary>
         private void CanBuyFirstBonus()
         {
             //cursor
-            if (scoreVar > cursorBonusBasisPrijs)
+            if (scoreVar >= cursorBonusBasisPrijs)
             {
                 CursorBonus.Visibility = Visibility.Visible;
             }
@@ -395,7 +480,7 @@ namespace CookieClick
                 CursorBonus.Visibility=Visibility.Collapsed ;
             }
             //grandma
-            if (scoreVar > grandmaBonusBasisPrijs)
+            if (scoreVar >= grandmaBonusBasisPrijs)
             {
                 GrandmaBonus.Visibility = Visibility.Visible;
             }
@@ -404,7 +489,7 @@ namespace CookieClick
                 GrandmaBonus.Visibility = Visibility.Collapsed;
             } 
             //farm
-            if (scoreVar > farmBonusBasisPrijs)
+            if (scoreVar >= farmBonusBasisPrijs)
             {
                 FarmBonus.Visibility=Visibility.Visible;
             }
@@ -413,7 +498,7 @@ namespace CookieClick
                 FarmBonus.Visibility = Visibility.Collapsed;
             } 
             //mine
-            if (scoreVar > mineBonusBasisPrijs)
+            if (scoreVar >= mineBonusBasisPrijs)
             {
                 MineBonus.Visibility = Visibility.Visible;
             }
@@ -422,7 +507,7 @@ namespace CookieClick
                 MineBonus.Visibility = Visibility.Collapsed;
             }
             //factory
-            if (scoreVar > factoryBonusBasisPrijs)
+            if (scoreVar >= factoryBonusBasisPrijs)
             {
                 FactoryBonus.Visibility = Visibility.Visible;
             }
@@ -431,7 +516,7 @@ namespace CookieClick
                 FactoryBonus.Visibility = Visibility.Collapsed;
             }
             //bank
-            if (scoreVar > bankBonusBasisPrijs)
+            if (scoreVar >= bankBonusBasisPrijs)
             {
                 BankBonus.Visibility = Visibility.Visible;
             }
@@ -440,7 +525,7 @@ namespace CookieClick
                 BankBonus.Visibility = Visibility.Collapsed;
             }
             //temple
-            if (scoreVar > templeBonusBasisPrijs)
+            if (scoreVar >= templeBonusBasisPrijs)
             {
                 TempleBonus.Visibility = Visibility.Visible;
             }
@@ -449,81 +534,11 @@ namespace CookieClick
                 TempleBonus.Visibility = Visibility.Collapsed;
             }
         }
-        private double SecondBonus(double basisPrijs,double verdubbeling)
-        {
-                return basisPrijs* verdubbeling;
-        }
 
-        private void CanBuySecondBonus()
-        {
-            //cursor
-            if (scoreVar > cursorBonusNieuwPrijs)
-            {
-                CursorBonus.IsEnabled = true;
-            }
-            else if (scoreVar < cursorBonusNieuwPrijs)
-            {
-                CursorBonus.IsEnabled = false;
-            }
-            //grandma
-            if (scoreVar > grandmaBonusNieuwPrijs)
-            {
-                GrandmaBonus.IsEnabled = true;
-            }
-            else if (scoreVar < grandmaBonusNieuwPrijs)
-            {
-                GrandmaBonus.IsEnabled = false;
-            }
-            //farm
-            if (scoreVar > farmBonusNieuwPrijs)
-            {
-                FarmBonus.IsEnabled = true;
-            }
-            else if (scoreVar < farmBonusNieuwPrijs)
-            {
-                FarmBonus.IsEnabled = false;
-            }
-            //mine
-            if (scoreVar > mineBonusNieuwPrijs)
-            {
-                MineBonus.IsEnabled = true;
-            }
-            else if (scoreVar < mineBonusNieuwPrijs)
-            {
-                MineBonus.IsEnabled = false;
-            }
-            //factory
-            if (scoreVar > factoryBonusNieuwPrijs)
-            {
-                FactoryBonus.IsEnabled = true;
-            }
-            else if (scoreVar < factoryBonusNieuwPrijs)
-            {
-                FactoryBonus.IsEnabled = false;
-            }
-            //bank 
-            if (scoreVar > bankBonusNieuwPrijs)
-            {
-                BankBonus.IsEnabled = true;
-            }
-            else if (scoreVar < bankBonusNieuwPrijs)
-            {
-                BankBonus.IsEnabled = false;
-            }
-            //temple 
-            if (scoreVar > templeBonusNieuwPrijs)
-            {
-                TempleBonus.IsEnabled = true;
-            }
-            else if (scoreVar < templeBonusNieuwPrijs)
-            {
-                TempleBonus.IsEnabled = false;
-            }
-        }
-    
-
-        /// <summary>
-        /// 
+/// <summary>
+        /// <para>omdat ook alle bonus buttons naar deze functie luisteren heb ik ook hier een switch gebruikt die gaat kijken welke button is geklikt de naam krijg ik van mijn sender</para>
+        /// <para>bonusprijsverdubbeling staat bovenaan als 50  hier doe ik eerst maal 10, dan geef ik deze mee als parrameter met de functei die mijn nieuwe prijs gaat berekenen</para>
+        /// <para>(inverstering) nieuwPrijs gelijkstellen aan de returnvalue van secondBonus(basisprijs,verdubbeling)</para>
         /// </summary>
         private void Bonus_Click(object sender, RoutedEventArgs e)
         {
@@ -532,12 +547,11 @@ namespace CookieClick
             switch (BtnName)
             {
                 case "CursorBonus":
-                    cursorBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     //krijg ik de prijs terug na verdubbeling 
                     cursorBonusNieuwPrijs = SecondBonus(cursorBasisPrijs, bonusPrijsVerdubbeling);
                     //kijken of ik kan kopen of niet 
-                  //  CanBuySecondBonus();
+                    //  CanBuySecondBonus();
                     //passieveInkomenVar -= totaalOpbrengstCursor;
                     //passieveInkomenVar += totaalOpbrengstCursor * vermenigVuldiging;
                     //cursorPerSeconde = cursorPerSeconde * vermenigVuldiging;
@@ -545,7 +559,6 @@ namespace CookieClick
                     break;
 
                 case "GrandmaBonus":
-                    grandmaBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     grandmaBonusNieuwPrijs = SecondBonus(grandmaBasisPrijs, bonusPrijsVerdubbeling);
                     //CanBuySecondBonus();
@@ -555,7 +568,6 @@ namespace CookieClick
                     break;
 
                 case "FarmBonus":
-                    farmBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     farmBonusNieuwPrijs = SecondBonus(farmBasisPrijs, bonusPrijsVerdubbeling);
                     //CanBuySecondBonus();
@@ -565,7 +577,6 @@ namespace CookieClick
                     break;
 
                 case "MineBonus":
-                    mineBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     mineBonusNieuwPrijs = SecondBonus(mineBasisPrijs, bonusPrijsVerdubbeling);
                     //CanBuySecondBonus();
@@ -574,7 +585,6 @@ namespace CookieClick
                     break;
 
                 case "FactoryBonus":
-                    factoryBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     factoryBonusNieuwPrijs = SecondBonus(factoryBasisPrijs, bonusPrijsVerdubbeling);
                     //bonus = scoreVar += (factoryPerSeconde * factoryAantalVar) * vermenigVuldiging;
@@ -582,7 +592,6 @@ namespace CookieClick
                     break;
 
                 case "BankBonus":
-                    bankBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     bankBonusNieuwPrijs = SecondBonus(bankBasisPrijs, bonusPrijsVerdubbeling);
                     //bonus = scoreVar += (bankPerSeconde * bankAantalVar) * vermenigVuldiging;
@@ -590,18 +599,113 @@ namespace CookieClick
                     break;
 
                 case "TempleBonus":
-                    templeBonusAantal++;
                     bonusPrijsVerdubbeling *= 10;
                     templeBonusNieuwPrijs = SecondBonus(templeBasisPrijs, bonusPrijsVerdubbeling);
                     //bonus = scoreVar += (templePerSeconde * templeAantalVar) * vermenigVuldiging;
                     //vermenigVuldiging *= 2;
                     break;
 
+            }
+
         }
 
-        // voor elke button geld het zelfde principe, dus elke button luistert naar een event 
-        // aantal van die investering gaat omhoog,
-        // score gaat omlaag met prijs van investering 
+/// <summary>
+        /// <para>hier word de prijs berekend voor elke bonus die minstens 1 keer is aangekocht</para>
+        /// <para>bij elke klik op een bonus word de nieuwe prijs gelijkgesteld aan de return value van deze functie</para>
+        /// </summary>
+        /// <param name="basisPrijs">voor elke button is dit anders vb cursor =15 grandma 100</param>
+        /// <param name="verdubbeling"> standaard 50 bij elke bonus klik word er maal 10 van gedaan en dan komt deze hier binnen dit kan zijn 500,5000 ect... </param>
+        /// <returns>basisprijs maal verdubbeling</returns>
+        private double SecondBonus(double basisPrijs,double verdubbeling)
+        {
+                return basisPrijs* verdubbeling;
+        }
+
+/// <summary>
+        /// nadat de (investering)BonusNieuwprijs is berekend ga ik hier ook weer om de 10 milliseconde kijken of de button enabled or disabled moet worden
+        /// </summary>
+        private void CanBuySecondBonus()
+        {
+            //cursor
+            if (scoreVar >= cursorBonusNieuwPrijs)
+            {
+                CursorBonus.IsEnabled = true;
+            }
+            else 
+            {
+                CursorBonus.IsEnabled = false;
+            }
+            //grandma
+            if (scoreVar >= grandmaBonusNieuwPrijs)
+            {
+                GrandmaBonus.IsEnabled = true;
+            }
+            else
+            {
+                GrandmaBonus.IsEnabled = false;
+            }
+            //farm
+            if (scoreVar >= farmBonusNieuwPrijs)
+            {
+                FarmBonus.IsEnabled = true;
+            }
+            else
+            {
+                FarmBonus.IsEnabled = false;
+            }
+            //mine
+            if (scoreVar >= mineBonusNieuwPrijs)
+            {
+                MineBonus.IsEnabled = true;
+            }
+            else 
+            {
+                MineBonus.IsEnabled = false;
+            }
+            //factory
+            if (scoreVar >= factoryBonusNieuwPrijs)
+            {
+                FactoryBonus.IsEnabled = true;
+            }
+            else 
+            {
+                FactoryBonus.IsEnabled = false;
+            }
+            //bank 
+            if (scoreVar >= bankBonusNieuwPrijs)
+            {
+                BankBonus.IsEnabled = true;
+            }
+            else 
+            {
+                BankBonus.IsEnabled = false;
+            }
+            //temple 
+            if (scoreVar >= templeBonusNieuwPrijs)
+            {
+                TempleBonus.IsEnabled = true;
+            }
+            else 
+            {
+                TempleBonus.IsEnabled = false;
+            }
+        }
+    
+/// <summary>
+        /// elke investering button luisterd naar deze functie 
+        /// daarom heb ik hier een switch case gebruikt op basis van de button name,
+        /// in elke button gebeurd het volgende
+        /// <para>1. de prijs van mijn investering word afgetrokken van scoreVar.</para>
+        /// <para>2. van elke investering hou ik het aantal bij, deze gaat bij elke klik met 1 omhoog voor de betreffende investering.</para>
+        /// <para>3. de (opbrengst per seconde) word opgeteld bij passiveincomevar deze variable is alleen om bij te houden wat de speler per seconde verdiend</para>
+        /// <para>4. de (opbrengst per 10 milliseconde) word opgeteld bij (opbrengst) deze word in de update functie aan de score toegevoegd (per 10 miliseconde)</para>
+        /// <para>5.  </para>
+        /// <para>6. stackpanel van de investering word visible</para>
+        /// <para>7. nieuwe image object word aangemaakt </para>
+        /// <para>8. nieuwe image krijgt een source mee </para>
+        /// <para>9. width, height en margin word toegevoegd aan de image</para>
+        /// <para>10. image word toegevoegd aan de stackPanel.</para>
+        /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string ButtonName = (sender as Button).Name;
@@ -609,9 +713,12 @@ namespace CookieClick
             {
                 //Cursor
                 case "CursorBtn":
-                    CursorAantalVar++;
-                    ScoreVar -= double.Parse(LblCursorPrijs.Content.ToString());
-                    PasiveIncomenVar += CursorPerSeconde;
+                    scoreVar -= prijsBerekenen(cursorBasisPrijs, cursorAantalVar);
+                    cursorAantalVar++;
+                    passieveInkomenVar += cursorPerSeconde;
+                    opbrengst += cursorPerTienMiliSeconde;
+                    cursorTotaalOpbrengst += cursorPerSeconde;
+                    //
                     CursorPanel.Visibility = Visibility.Visible;
                             cursorTotaalOpbrengst = cursorPerSeconde * cursorAantalVar;
                             Image CursorImage = new Image();
@@ -623,9 +730,12 @@ namespace CookieClick
                     break;
                 //Grandma
                 case "GrandmaBtn":
-                    GrandmaAantalVar++;
-                    ScoreVar -= double.Parse(LblGrandmaPrijs.Content.ToString());
-                    PasiveIncomenVar += GrandmaPerSeconde;
+                    scoreVar -= prijsBerekenen(grandmaBasisPrijs, grandmaAantalVar);
+                    grandmaAantalVar++;
+                    passieveInkomenVar += grandmaPerSeconde;
+                    opbrengst += grandmaPerTienMiliSeconde;
+                    grandmaTotaalOpbrengst += grandmaPerSeconde;
+                    // 
                             GrandmaPanel.Visibility = Visibility.Visible;
                             Image GrandmaImage = new Image();
                             GrandmaImage.Source = new BitmapImage(new Uri("/images/supperGrandma.png", UriKind.Relative));
@@ -636,9 +746,12 @@ namespace CookieClick
                     break;
                 //Farm
                 case "FarmBtn":
-                    FarmAantalVar++;
-                    ScoreVar -= double.Parse(LblFarmPrijs.Content.ToString());
-                    PasiveIncomenVar += FarmPerSeconde;
+                    scoreVar -= prijsBerekenen(farmBasisPrijs, farmAantalVar);
+                    farmAantalVar++;
+                    passieveInkomenVar += farmPerSeconde;
+                     opbrengst += farmPerTienMiliSeconde;
+                    farmTotaalOpbrengst += farmPerSeconde;
+                    //
                             FarmPanel.Visibility = Visibility.Visible;
                             Image FarmImage = new Image();
                             FarmImage.Source = new BitmapImage(new Uri("/images/Farm.png", UriKind.Relative));
@@ -649,9 +762,12 @@ namespace CookieClick
                     break;
                 //Mine
                 case "MineBtn":
-                    MineAantalVar++;
-                    ScoreVar -= double.Parse(LblMinePrijs.Content.ToString());
-                    PasiveIncomenVar += MinePerSeconde;
+                    scoreVar -= prijsBerekenen(mineBasisPrijs, mineAantalVar);
+                    mineAantalVar++;
+                    passieveInkomenVar += minePerSeconde;
+                    opbrengst += minePerTienMiliSeconde;
+                    mineTotaalOpbrengst += minePerSeconde;
+                    //
                             MinePanel.Visibility = Visibility.Visible;
                             Image MineImage = new Image();
                             MineImage.Source = new BitmapImage(new Uri("/images/Mine.jpg", UriKind.Relative));
@@ -662,9 +778,12 @@ namespace CookieClick
                     break;
                 //Factory
                 case "FactoryBtn":
-                    FactoryAantalVar++;
-                    ScoreVar -= double.Parse(LblFactoryPrijs.Content.ToString());
-                    PasiveIncomenVar += FactoryPerSeconde;
+                    scoreVar -= prijsBerekenen(factoryBasisPrijs,factoryAantalVar);
+                    factoryAantalVar++;
+                    passieveInkomenVar += factoryPerSeconde;
+                    opbrengst += factoryPerTienMiliSeconde;
+                    factoryTotaalOpbrengst += factoryPerSeconde;
+                    //
                             FactoryPanel.Visibility = Visibility.Visible;
                             Image FactoryImage = new Image();
                             FactoryImage.Source = new BitmapImage(new Uri("/images/Factory.png", UriKind.Relative));
@@ -675,9 +794,12 @@ namespace CookieClick
                     break;
                 //Bank
                 case "BankBtn":
-                    BankAantalVar++;
-                    ScoreVar -= double.Parse(LblBankPrijs.Content.ToString());
-                    PasiveIncomenVar += BankPerSeconde;
+                    scoreVar -= prijsBerekenen(bankBasisPrijs,bankAantalVar);
+                    bankAantalVar++;
+                    passieveInkomenVar += bankPerSeconde;
+                    opbrengst += bankPerTienMiliSeconde;
+                    bankTotaalOpbrengst += bankPerSeconde;
+                    //
                             BankPanel.Visibility = Visibility.Visible;
                             Image BankImage = new Image();
                             BankImage.Source = new BitmapImage(new Uri("/images/Bank.png", UriKind.Relative));
@@ -688,9 +810,12 @@ namespace CookieClick
                     break;
                 //Temple
                 case "TempleBtn":
-                    TempleAantalVar++;
-                    ScoreVar -= double.Parse(LblTemplePrijs.Content.ToString());
-                    PasiveIncomenVar += TemplePerSeconde;
+                    scoreVar -= prijsBerekenen(templeBasisPrijs,templeAantalVar);
+                    templeAantalVar++;
+                    passieveInkomenVar += templePerSeconde;
+                    opbrengst += templePerTienMiliSeconde;
+                    templeTotaalOpbrengst += templePerSeconde;
+                    //
                             TemplePanel.Visibility = Visibility.Visible;
                             Image TempleImage = new Image();
                             TempleImage.Source = new BitmapImage(new Uri("/images/Temple.png", UriKind.Relative));
@@ -700,31 +825,38 @@ namespace CookieClick
                             TemplePanel.Children.Add(TempleImage);
                     break;
             }
-            TranslateScore(ScoreVar);
         }
-
-        /// <summary>
+ 
+/// <summary>
         /// de formule van deze functie => standaardprijs maal (1.15 tot de macht van aantal) 
         /// </summary>
         /// <param name="standaardprijs">standaardprijs van mijn investering cursorprijs,grandmaprijs,farmprijs,minePrijs</param>
         /// <param name="aantal"> aantal keer gekocht </param>
-        /// <returns> de berekende prijs </returns>
+        /// <returns> nieuwprijs voor elke investering deze word voor elke button geupdate in de update functie </returns>
         private double prijsBerekenen(double standaardprijs, double aantal)
         {
             double NieuwPrijs = Math.Ceiling(standaardprijs * Math.Pow(1.15, aantal));
             return NieuwPrijs;
 
         }
-        //mouseDown omdat het een lable is 
+ 
+/// <summary>
+        /// voor deze funcite heb ik gebruik gemaakt van de visualBasic interaction input box
+        /// <para>eerst word de gebruiker gevraagd om een nieuwe naam in te geven voor zijn bakkery</para>
+        /// <para>in een if else statment word vervolgens gecontrolleerd of de gebruiker iets heeft ingegeven </para>
+        /// <para>als de gebruiker degelijk iet heeft ingetypt word de content van lable LblBakkerijNaam aangepast </para>
+        /// <para>anders krijgt de gebruiker een melding dat de content niet leeg mag zijn of witruimte bevatten</para>
+        /// <para>en word de standaard "PXL-BAKERY" text uiteraard niet vervangen </para>
+        /// </summary>
         private void LblBakkerijNaam_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //content opvragen en opslaan als nieuweBakkerijNaam
             string nieuweBakkerijNaam = Interaction.InputBox("enter new name");
 
-            if (nieuweBakkerijNaam.Trim()   !="")
+            if (!string.IsNullOrWhiteSpace(nieuweBakkerijNaam.Trim()))
             {
                 // Update label content
-                LblBakkerijNaam.Content = nieuweBakkerijNaam;
+                LblBakkerijNaam.Content = nieuweBakkerijNaam.Trim();
             }
             else
             {
@@ -732,7 +864,8 @@ namespace CookieClick
             }
 
         }
-        /// <summary>
+
+/// <summary>
         /// <para>golden cookie is standaard disabled</para>
         /// <para>dit is de golden cookie als je hier op klikt word er 15 minuten aan passive invome bij scorevar  </para>
         /// <para>de berekening is eigenlijk heel simpel eerst doe ik passiveincome(dus per seconde) </para>
@@ -744,6 +877,5 @@ namespace CookieClick
          scoreVar+=(passieveInkomenVar * 60) *15;
             GoldenCookie.Visibility = Visibility.Hidden;
         }
-
     }
 }
