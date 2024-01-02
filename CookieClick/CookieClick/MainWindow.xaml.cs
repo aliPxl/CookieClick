@@ -31,7 +31,6 @@ namespace CookieClick
         //het inkomen dat de speler verdiend per seconde, deze gaat ook alleen omhoog per klik op een investering 
         double passieveInkomenVar = 0;
         // opbrengst is wat de speler krijgt per 10 milliseconde deze word uiteindelijk in de update functie aan scoreVar toegevoegd
-        double opbrengst =0;
         //
         double vermenigVuldiging = 1;
         //dit is bonus prijs verdubbeling na de eerste klik op bonus standaard 50 maar bij elke klik gaat deze maal 10 omhoogh  
@@ -54,7 +53,6 @@ namespace CookieClick
          // de basis prijs 
          // het aantal keer dat deze investering is gekocht 
          // het aantal koekjes per seconde dat deze oplevert 
-         // het aantal koekjes per 10 miliseconde dat deze oplevert(dit word later berekend cookies per seconde /100 )
 
             //bonus 
           //totale opbrengst van de investering 
@@ -66,7 +64,7 @@ namespace CookieClick
         private const double cursorBasisPrijs = 15;
         double cursorAantalVar = 0;
         double cursorPerSeconde = 0.1;
-        double cursorPerTienMiliSeconde = 0;
+
        //bonus
         double cursorTotaalOpbrengst = 0;
         private const double cursorBonusBasisPrijs = cursorBasisPrijs*100;
@@ -78,7 +76,7 @@ namespace CookieClick
         private const double grandmaBasisPrijs = 16;
         public int grandmaAantalVar = 0;
         private double grandmaPerSeconde = 1;
-        double grandmaPerTienMiliSeconde = 0;
+
         //bonus
         double grandmaTotaalOpbrengst=0;
         private const double grandmaBonusBasisPrijs = grandmaBasisPrijs * 100;
@@ -87,8 +85,8 @@ namespace CookieClick
         //farm
         private const double farmBasisPrijs = 17;
         public int farmAantalVar = 0;
-        private const double farmPerSeconde = 8;
-        double farmPerTienMiliSeconde = 0;
+        private  double farmPerSeconde = 8;
+
         //bonus
         double farmTotaalOpbrengst = 0;
         private const double farmBonusBasisPrijs = farmBasisPrijs * 100;
@@ -97,8 +95,8 @@ namespace CookieClick
         //Mine
         private const double mineBasisPrijs = 18;
         public int mineAantalVar = 0;
-        private const double minePerSeconde = 47;
-        double minePerTienMiliSeconde = 0;
+        private  double minePerSeconde = 47;
+
         //bonus 
         double mineTotaalOpbrengst = 0;
         private const double mineBonusBasisPrijs = mineBasisPrijs * 100;
@@ -107,8 +105,8 @@ namespace CookieClick
         //Factory
         private const double factoryBasisPrijs = 19;
         public int factoryAantalVar = 0;
-        private const double factoryPerSeconde = 260;
-        double factoryPerTienMiliSeconde = 0;
+        private  double factoryPerSeconde = 260;
+
         //bonus
         double   factoryTotaalOpbrengst = 0;
         private const double factoryBonusBasisPrijs = factoryBasisPrijs * 100;
@@ -117,8 +115,8 @@ namespace CookieClick
         //Bank
         private const double bankBasisPrijs = 20;
         public int bankAantalVar = 0;
-        private const double bankPerSeconde = 1400;
-        double bankPerTienMiliSeconde = 0;
+        private  double bankPerSeconde = 1400;
+
         //bonus 
         double bankTotaalOpbrengst = 0;
         private const double bankBonusBasisPrijs = bankBasisPrijs * 100;
@@ -127,8 +125,8 @@ namespace CookieClick
         //Temple
         private const double templeBasisPrijs = 21;
         public int templeAantalVar = 0;
-        private const double templePerSeconde = 7800;
-        double templePerTienMiliSeconde = 0;
+        private  double templePerSeconde = 7800;
+
         //bonus 
         double templeTotaalOpbrengst = 0;
         private const double templeBonusBasisPrijs = templeBasisPrijs * 100;
@@ -144,15 +142,6 @@ namespace CookieClick
         {
             InitializeComponent();
 
-            //opbrengst per 10 milliseconde is gelijk aan opbrengst per seconde / 100
-            //en omdat cursor per seconde kan veranderen bij bijvoorbeeld bunus is dit meer dinamic
-            cursorPerTienMiliSeconde = cursorPerSeconde / 100;
-            grandmaPerTienMiliSeconde = grandmaPerSeconde / 100;
-            farmPerTienMiliSeconde = farmPerSeconde / 100;
-            minePerTienMiliSeconde = minePerSeconde / 100;
-            factoryPerTienMiliSeconde = factoryPerSeconde / 100;
-            bankPerTienMiliSeconde = bankPerSeconde / 100;
-            templePerTienMiliSeconde = templePerSeconde / 100;
             //timer word gestart die iedere 10 seconde iets doet 
             timer = new DispatcherTimer();
             timer.Tick += TickerUpdate;
@@ -212,9 +201,6 @@ namespace CookieClick
         /// </summary>
         private void UpdateFunctie()
         {
-            //ScoreVar += PasiveIncomenVar;
-            //TotaalScore += PasiveIncomenVar;
-
 
             //investeringen worden pas zichtbaar als er genoeg koekjes zijn
             ShowButtons();
@@ -227,8 +213,9 @@ namespace CookieClick
 
 
             //bij elke klik op een investering word de (opbrengst per 10 miliseconde)opgeslagen in de variable opbrengst
-            //deze word hieronder zowel bij de score !!!!!!!!!!!!!!!!!!!als bij de totaalscore opgeteld
-            scoreVar+=opbrengst;
+            //passiveincome is altijd per seconde vandaar /100 
+            scoreVar+=passieveInkomenVar/100; //
+            totaalScore+=passieveInkomenVar/100; //
 
             //als dat is berekend laat ik dit afgerond naar boven aan de gebruiker zien in mijn lblScore lable boven het koekje 
             LblScore.Content = VertaalScore(Math.Ceiling(Math.Round(scoreVar)));
@@ -548,61 +535,72 @@ namespace CookieClick
             {
                 case "CursorBonus":
                     bonusPrijsVerdubbeling *= 10;
-                    //krijg ik de prijs terug na verdubbeling 
                     cursorBonusNieuwPrijs = SecondBonus(cursorBasisPrijs, bonusPrijsVerdubbeling);
-                    //kijken of ik kan kopen of niet 
-                    //  CanBuySecondBonus();
-                    //passieveInkomenVar -= totaalOpbrengstCursor;
-                    //passieveInkomenVar += totaalOpbrengstCursor * vermenigVuldiging;
-                    //cursorPerSeconde = cursorPerSeconde * vermenigVuldiging;
 
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= cursorTotaalOpbrengst;
+                    passieveInkomenVar += cursorTotaalOpbrengst * vermenigVuldiging;
+                    cursorPerSeconde = cursorPerSeconde * vermenigVuldiging;
                     break;
 
                 case "GrandmaBonus":
                     bonusPrijsVerdubbeling *= 10;
                     grandmaBonusNieuwPrijs = SecondBonus(grandmaBasisPrijs, bonusPrijsVerdubbeling);
-                    //CanBuySecondBonus();
-                    //passieveInkomenVar -= totaalOpbrengstGrandma;
-                    //passieveInkomenVar += totaalOpbrengstGrandma * vermenigVuldiging;
-                    //grandmaPerSeconde *= vermenigVuldiging;
+
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= grandmaTotaalOpbrengst;
+                    passieveInkomenVar += grandmaTotaalOpbrengst * vermenigVuldiging;
+                    grandmaPerSeconde *= vermenigVuldiging;
                     break;
 
                 case "FarmBonus":
                     bonusPrijsVerdubbeling *= 10;
                     farmBonusNieuwPrijs = SecondBonus(farmBasisPrijs, bonusPrijsVerdubbeling);
-                    //CanBuySecondBonus();
-                    //bonus = scoreVar += (farmPerSeconde * farmAantalVar) * vermenigVuldiging;
-                    //vermenigVuldiging *= 2;
 
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= farmTotaalOpbrengst;
+                    passieveInkomenVar += farmTotaalOpbrengst*vermenigVuldiging;
+                    farmPerSeconde *= vermenigVuldiging;
                     break;
 
                 case "MineBonus":
                     bonusPrijsVerdubbeling *= 10;
                     mineBonusNieuwPrijs = SecondBonus(mineBasisPrijs, bonusPrijsVerdubbeling);
-                    //CanBuySecondBonus();
-                    //bonus = scoreVar += (minePerSeconde * mineAantalVar) * vermenigVuldiging;
-                    //vermenigVuldiging *= 2;
+                    
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= mineTotaalOpbrengst;
+                    passieveInkomenVar += mineTotaalOpbrengst;
+                    minePerSeconde *= vermenigVuldiging;
                     break;
 
                 case "FactoryBonus":
                     bonusPrijsVerdubbeling *= 10;
                     factoryBonusNieuwPrijs = SecondBonus(factoryBasisPrijs, bonusPrijsVerdubbeling);
-                    //bonus = scoreVar += (factoryPerSeconde * factoryAantalVar) * vermenigVuldiging;
-                    //vermenigVuldiging *= 2;
+
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= factoryTotaalOpbrengst;
+                    passieveInkomenVar += factoryTotaalOpbrengst;
+                    factoryPerSeconde *= vermenigVuldiging;
                     break;
 
                 case "BankBonus":
                     bonusPrijsVerdubbeling *= 10;
                     bankBonusNieuwPrijs = SecondBonus(bankBasisPrijs, bonusPrijsVerdubbeling);
-                    //bonus = scoreVar += (bankPerSeconde * bankAantalVar) * vermenigVuldiging;
-                    //vermenigVuldiging *= 2;
+
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= bankTotaalOpbrengst;
+                    passieveInkomenVar += bankTotaalOpbrengst;
+                    bankPerSeconde *= vermenigVuldiging;
                     break;
 
                 case "TempleBonus":
                     bonusPrijsVerdubbeling *= 10;
                     templeBonusNieuwPrijs = SecondBonus(templeBasisPrijs, bonusPrijsVerdubbeling);
-                    //bonus = scoreVar += (templePerSeconde * templeAantalVar) * vermenigVuldiging;
-                    //vermenigVuldiging *= 2;
+
+                    vermenigVuldiging *= 2;
+                    passieveInkomenVar -= templeTotaalOpbrengst;
+                    passieveInkomenVar += templeTotaalOpbrengst;
+                    templePerSeconde*= vermenigVuldiging;
                     break;
 
             }
@@ -716,7 +714,7 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(cursorBasisPrijs, cursorAantalVar);
                     cursorAantalVar++;
                     passieveInkomenVar += cursorPerSeconde;
-                    opbrengst += cursorPerTienMiliSeconde;
+                    //scoreVar += cursorPerTienMiliSeconde;//
                     cursorTotaalOpbrengst += cursorPerSeconde;
                     //
                     CursorPanel.Visibility = Visibility.Visible;
@@ -733,7 +731,7 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(grandmaBasisPrijs, grandmaAantalVar);
                     grandmaAantalVar++;
                     passieveInkomenVar += grandmaPerSeconde;
-                    opbrengst += grandmaPerTienMiliSeconde;
+                   //scoreVar += grandmaPerTienMiliSeconde;//
                     grandmaTotaalOpbrengst += grandmaPerSeconde;
                     // 
                             GrandmaPanel.Visibility = Visibility.Visible;
@@ -749,7 +747,6 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(farmBasisPrijs, farmAantalVar);
                     farmAantalVar++;
                     passieveInkomenVar += farmPerSeconde;
-                     opbrengst += farmPerTienMiliSeconde;
                     farmTotaalOpbrengst += farmPerSeconde;
                     //
                             FarmPanel.Visibility = Visibility.Visible;
@@ -765,7 +762,6 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(mineBasisPrijs, mineAantalVar);
                     mineAantalVar++;
                     passieveInkomenVar += minePerSeconde;
-                    opbrengst += minePerTienMiliSeconde;
                     mineTotaalOpbrengst += minePerSeconde;
                     //
                             MinePanel.Visibility = Visibility.Visible;
@@ -781,7 +777,6 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(factoryBasisPrijs,factoryAantalVar);
                     factoryAantalVar++;
                     passieveInkomenVar += factoryPerSeconde;
-                    opbrengst += factoryPerTienMiliSeconde;
                     factoryTotaalOpbrengst += factoryPerSeconde;
                     //
                             FactoryPanel.Visibility = Visibility.Visible;
@@ -797,7 +792,6 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(bankBasisPrijs,bankAantalVar);
                     bankAantalVar++;
                     passieveInkomenVar += bankPerSeconde;
-                    opbrengst += bankPerTienMiliSeconde;
                     bankTotaalOpbrengst += bankPerSeconde;
                     //
                             BankPanel.Visibility = Visibility.Visible;
@@ -813,7 +807,6 @@ namespace CookieClick
                     scoreVar -= prijsBerekenen(templeBasisPrijs,templeAantalVar);
                     templeAantalVar++;
                     passieveInkomenVar += templePerSeconde;
-                    opbrengst += templePerTienMiliSeconde;
                     templeTotaalOpbrengst += templePerSeconde;
                     //
                             TemplePanel.Visibility = Visibility.Visible;
