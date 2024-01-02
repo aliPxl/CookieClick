@@ -732,6 +732,18 @@ namespace CookieClick
             }
 
         }
+        /// <summary>
+        /// <para>golden cookie is standaard disabled</para>
+        /// <para>dit is de golden cookie als je hier op klikt word er 15 minuten aan passive invome bij scorevar  </para>
+        /// <para>de berekening is eigenlijk heel simpel eerst doe ik passiveincome(dus per seconde) </para>
+        /// <para>dat is het inkomen per minuut en dat maal 15 </para>
+        /// <para>eens er op geklikt word word het koekje weer hidden</para>
+        /// </summary
+        private void GoldenCookie_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+         scoreVar+=(passieveInkomenVar * 60) *15;
+            GoldenCookie.Visibility = Visibility.Hidden;
+        }
 
     }
 }

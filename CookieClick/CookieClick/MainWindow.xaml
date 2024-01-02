@@ -12,9 +12,9 @@
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <StackPanel>
             <Label Name="LblBakkerijNaam" Content="PXL-Bakery" Foreground ="Beige" FontSize="30" MouseDown="LblBakkerijNaam_MouseDown"></Label>
@@ -105,14 +105,22 @@
                     </StackPanel>
                 </ScrollViewer>
 
-        <StackPanel Grid.Column="1">
+                <WrapPanel Grid.Column="1">
+                    <Image Source="/images/goldenCookie.jpg" Name="GoldenCookie" MouseDown="GoldenCookie_MouseDown" Visibility="Hidden"></Image>
+                </WrapPanel>
 
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
         <ScrollViewer Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto"  Margin="50,50">
-        <StackPanel>
+            
+            <StackPanel>
+              
+                
                 <Button x:Name="CursorBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -126,28 +134,29 @@
                     <Label Grid.Column="1" >Cursor</Label>
                     <Label Name="LblCursorAantal" Grid.Column="2">0</Label>
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
+                        
                 </Grid>
             </Button>
                 <Button x:Name="CursorBonus" Content="Cursor Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
                 
                 <Button x:Name="GrandmaBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                    <Image Source="images/SupperGrandma.png" Width="40"></Image>
-                    <Label Grid.Column="1">Grandma</Label>
-                    <Label Name="LblGrandmaAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                </Grid>
-            </Button>
+                        <Image Source="images/SupperGrandma.png" Width="40"></Image>
+                        <Label Grid.Column="1">Grandma</Label>
+                        <Label Name="LblGrandmaAantal" Grid.Column="2">0</Label>
+                        <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
+                    </Grid>
+                </Button>
                 <Button x:Name="GrandmaBonus" Content="Grandma Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
                 
                 <Button x:Name="FarmBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
@@ -250,7 +259,7 @@
             </Button>
                 <Button x:Name="TempleBonus" Content="Temple Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
              
-        </StackPanel>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </Window>

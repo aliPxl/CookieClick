@@ -111,5 +111,23 @@
   <ItemGroup>
     <Resource Include="images\Temple.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\CursorBackGround.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\GrandmaBackGround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\FarmBackGround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\MineBackGround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\BankBackGround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\goldenCookie.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
