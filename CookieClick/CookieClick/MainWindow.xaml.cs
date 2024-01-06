@@ -24,6 +24,9 @@ namespace CookieClick
     /// </summary>
     public partial class MainWindow : Window
     {
+        //deze random word gebruikt om de kans te berekenen op de golden cookie
+        Random random = new Random();
+
         // scorevar gaat omhoog bij elke klik of en omlaag bij elke investering 
         double scoreVar = 0;
         //totaalScore gaat alleen omhoog, dit is om de buttons die collapsed zijn visible te maken wanneer ze ooit x aantal koekjes hebben gehaald 
@@ -147,8 +150,12 @@ namespace CookieClick
             timer.Tick += TickerUpdate;
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Start();
-            // alle stackpannels(direction horizontal) die bij elke klik mijn investeringen representeren zijn standaard collapsed
-            // tot er op een button/investering word geklikt 
+            //Golden cookie timer per minuut 
+            timer = new DispatcherTimer();
+            timer.Tick += CalculateGoldenChances;
+            timer.Interval = TimeSpan.FromMinutes(1);
+            timer.Start();
+
             CursorPanel.Visibility = Visibility.Collapsed;
             GrandmaPanel.Visibility = Visibility.Collapsed;
             FarmPanel.Visibility = Visibility.Collapsed;
@@ -156,9 +163,34 @@ namespace CookieClick
             FactoryPanel.Visibility = Visibility.Collapsed;
             BankPanel.Visibility = Visibility.Collapsed;
             TemplePanel.Visibility = Visibility.Collapsed;
-
         }
+        /// <summary>
+        /// <para>kans = 0.3 (30%) er word een random aangemaakt tussen 0 en 1, </para>
+        /// <para>als mijn kans groter is verschijnt golden cookie </para>
+        /// </summary>
+        private void CalculateGoldenChances(object sender, EventArgs e)
+        {
+            //nieuwe random tussen 0 en 1
+            Random rnd = new Random();
+            double random = rnd.NextDouble();
 
+            //mijn kans (30%)
+            double kans = 0.3;
+            //als mijn kans groter is dan het random getal verschijnt de golden cookie op een plaats, gegenereerd door PlaceOfGoldenCookie()
+            if (kans >= random)
+            {
+                PlaceOfGoldenCookie();
+        }
+        }
+        private void PlaceOfGoldenCookie()
+        {
+            //twee randoms om de x en y possitie te bepalen 
+            double randomX = random.Next(0, (int)(ActualWidth - GoldenCookie.Width));
+            double randomY = random.Next(0, (int)(ActualHeight - GoldenCookie.Height));
+
+            GoldenCookie.Margin = new Thickness(randomX, randomY, 0, 0);
+            GoldenCookie.Visibility = Visibility.Visible;
+        }
 /// <summary>
         /// <para>dit is de mouse_down event voor het koekje</para>
         /// <para>koekje word even kleiner</para>
@@ -867,8 +899,9 @@ namespace CookieClick
         /// </summary
         private void GoldenCookie_MouseDown(object sender, MouseButtonEventArgs e)
         {
-         scoreVar+=(passieveInkomenVar * 60) *15;
-            GoldenCookie.Visibility = Visibility.Hidden;
+            passieveInkomenVar = (passieveInkomenVar * 60) * 15;
+            GoldenCookie.Visibility = Visibility.Collapsed;
+        }
         }
     }
 }

@@ -16,7 +16,15 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
+        
+            <Image Source="/images/goldenCookie.jpg" Name="GoldenCookie" MouseDown="GoldenCookie_MouseDown" Visibility="Collapsed" Width="150" Height="350" Panel.ZIndex="10000" Grid.ColumnSpan="3"></Image>
+        
+
+        <Viewbox Panel.ZIndex="0">
+          
+            <StackPanel Margin="50" Grid.Column="0" Panel.ZIndex="0">
+
+
             <Label Name="LblBakkerijNaam" Content="PXL-Bakery" Foreground ="Beige" FontSize="30" MouseDown="LblBakkerijNaam_MouseDown"></Label>
             <Label Name="LblScore" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
             <Image 
