@@ -97,19 +97,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\Bank.png" />
-    <Resource Include="images\Factory.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\background.png" />
-    <Resource Include="images\Cursor.png" />
-    <Resource Include="images\Farm.png" />
     <Resource Include="images\koekje.png" />
-    <Resource Include="images\Mine.jpg" />
-    <Resource Include="images\supperGrandma.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\Temple.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\CursorBackGround.jpg" />
@@ -128,6 +117,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\goldenCookie.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cookieClickerBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\supperGrandma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Bank.png" />
+    <Resource Include="images\Factory.png" />
+    <Resource Include="images\Farm.png" />
+    <Resource Include="images\Mine.jpg" />
+    <Resource Include="images\Temple.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

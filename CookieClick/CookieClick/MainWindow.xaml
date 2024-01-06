@@ -7,14 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Name="MW">
     <Window.Background>
-        <ImageBrush ImageSource="/images/background.png">
+        <ImageBrush ImageSource="/images/CookieClickerBackground.png">
         </ImageBrush>
     </Window.Background>
-    <Grid>
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0,5,0,5"></Setter>
+            <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="FontFamily" Value="Italic"/>
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="FontSize" Value="50"/>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="MainGrid" Panel.ZIndex="0">
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         
             <Image Source="/images/goldenCookie.jpg" Name="GoldenCookie" MouseDown="GoldenCookie_MouseDown" Visibility="Collapsed" Width="150" Height="350" Panel.ZIndex="10000" Grid.ColumnSpan="3"></Image>
@@ -26,23 +38,30 @@
 
 
             <Label Name="LblBakkerijNaam" Content="PXL-Bakery" Foreground ="Beige" FontSize="30" MouseDown="LblBakkerijNaam_MouseDown"></Label>
-            <Label Name="LblScore" Content="Score:0" FontSize="50" Foreground="Beige"></Label>
+            <Label Name="LblScore" Content="Score:0" FontSize="30" Background="LightGoldenrodYellow"></Label>
             <Image 
+                            Panel.ZIndex="0"
             Source="/images/koekje.png" 
             Width="150" Name="KoekjeImg"
             MouseDown="KoekjeImg_MouseDown" 
             MouseUp="KoekjeImg_MouseUp"
             MouseLeave="KoekjeImg_MouseLeave">
             </Image>
-            <Label Name="LblPassiveIncomen" Foreground="Beige" HorizontalAlignment="Center" FontSize="50">0</Label>
+                <Label Name="LblPassiveIncomen" Background="LightGoldenrodYellow" HorizontalAlignment="Center" FontSize="30" Panel.ZIndex="0" >0</Label>
         </StackPanel>
 
+        </Viewbox>
    
         <!--scrollviewer rond alle pannels in de eerste column staat op vertical vizible -->
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" >
             <!--in deze stackpanel zit alles zichtbaar in column 1 -->
             <!--main stackpanel waar een vertical scrollviewer rond zit-->
             <StackPanel Name="MainStackPanle" Grid.Column="1">
+            </ScrollViewer>-->
+
+            
+  
+            <StackPanel Name="MainStackPanle" Grid.Column="1" Panel.ZIndex="0" VerticalAlignment="Center">
                 <!--Cursor-->
                 <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="auto" VerticalScrollBarVisibility="Hidden">
 
@@ -123,27 +142,50 @@
         <ScrollViewer Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto"  Margin="50,50">
             
             <StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
               
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="CursorBonus" Click="Bonus_Click" BorderThickness="0">
+                            <Image Source="/images/cursor.png" Width="100"></Image>
+                        </Button>
+                        <Button x:Name="GrandmaBonus" Click="Bonus_Click" BorderThickness="0" Margin="10,0,1,0">
+                            <Image Source="/images/SupperGrandma.png" Width="100"></Image>
+                        </Button>
                 
-                <Button x:Name="CursorBtn" IsEnabled="False" Click="Button_Click" Visibility="Collapsed">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
+                        <Button x:Name="FarmBonus" Click="Bonus_Click" BorderThickness="0" Margin="10,0,1,0">
+                            <Image Source="/images/Farm.png" Width="100"></Image>
+                        </Button>
+
+                        <Button x:Name="MineBonus" Click="Bonus_Click" BorderThickness="0" Margin="10,0,1,0">
+                            <Image Source="/images/Mine.jpg" Width="100"></Image>
+                        </Button>
+
+                        <Button x:Name="FactoryBonus" Click="Bonus_Click" BorderThickness="0" Margin="10,0,1,0">
+                            <Image Source="/images/Factory.png" Width="100"></Image>
+                        </Button>
+
+                        <Button x:Name="BankBonus" Click="Bonus_Click" BorderThickness="0" Margin="10,0,1,0">
+                            <Image Source="/images/Bank.png" Width="100"></Image>
+                        </Button>
+
+                        <Button x:Name="TempleBonus" Click="Bonus_Click" BorderThickness="0" Margin="10,0,1,0">
+                            <Image Source="/images/Temple.png" Width="100"></Image>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
 
                     <Image Source="images/Cursor.png" Width="40"></Image>
                     <Label Grid.Column="1" >Cursor</Label>
                     <Label Name="LblCursorAantal" Grid.Column="2">0</Label>
                     <Label Name="LblCursorPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
                         
-                </Grid>
+                <Button x:Name="CursorBtn" Click="Button_Click" Style="{StaticResource ButtonStyle}" Grid.Column="2">
+                    <StackPanel Orientation="Horizontal" Margin="0">
+                        <Image Source="/images/Cursor.png" Height="50"></Image>
+                        <Label>cursor</Label>
+                        <Label Name="LblCursorAantal">100 million</Label>
+                        <Label Name="LblCursorPrijs" HorizontalAlignment="Right">50000</Label>
+                    </StackPanel>
             </Button>
                 <Button x:Name="CursorBonus" Content="Cursor Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
                 
@@ -159,11 +201,13 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Image Source="images/SupperGrandma.png" Width="40"></Image>
-                        <Label Grid.Column="1">Grandma</Label>
-                        <Label Name="LblGrandmaAantal" Grid.Column="2">0</Label>
-                        <Label Name="LblGrandmaPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                    </Grid>
+                <Button x:Name="GrandmaBtn" Click="Button_Click" Style="{StaticResource ButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/images/SupperGrandma.png" Height="50"></Image>
+                        <Label>Grandma</Label>
+                        <Label Name="LblGrandmaAantal">0</Label>
+                        <Label Name="LblGrandmaPrijs">100</Label>
+                    </StackPanel>
                 </Button>
                 <Button x:Name="GrandmaBonus" Content="Grandma Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
                 
@@ -179,11 +223,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Image Source="images/Farm.png" Width="40"></Image>
+                <Button x:Name="FarmBtn" IsEnabled="False" Click="Button_Click" Style="{StaticResource ButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/Farm.png" Height="50" ></Image>
                     <Label Grid.Column="1">Farm</Label>
                     <Label Name="LblFarmAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblFarmPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                </Grid>
+                        <Label Name="LblFarmPrijs">0</Label>
+                    </StackPanel>
             </Button>
                 <Button x:Name="FarmBonus" Content="Farm Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
 
@@ -199,11 +245,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Image Source="images/Mine.jpg" Width="40"></Image>
+                <Button x:Name="MineBtn" IsEnabled="False" Click="Button_Click" Style="{StaticResource ButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/Mine.jpg" Height="50"></Image>
                     <Label Grid.Column="1">Mine</Label>
                     <Label Name="LblMineAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblMinePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                </Grid>
+                        <Label Name="LblMinePrijs">0</Label>
+                    </StackPanel>
             </Button>
                 <Button x:Name="MineBonus" Content="Mine Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
 
@@ -219,11 +267,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Image Source="images/Factory.png" Width="40"></Image>
+                <Button x:Name="FactoryBtn" IsEnabled="False" Click="Button_Click" Style="{StaticResource ButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/Factory.png" Height="50"></Image>
                     <Label Grid.Column="1">Factory</Label>
                     <Label Name="LblFactoryAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblFactoryPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                </Grid>
+                        <Label Name="LblFactoryPrijs">0</Label>
+                    </StackPanel>
             </Button>
                 <Button x:Name="FactoryBonus" Content="Factory Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
 
@@ -239,11 +289,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Image Source="images/Bank.png" Width="40"></Image>
+                <Button x:Name="BankBtn" IsEnabled="False" Click="Button_Click" Style="{StaticResource ButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/Bank.png" Width="50"></Image>
                     <Label Grid.Column="1">Bank</Label>
                     <Label Name="LblBankAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblBankPrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                </Grid>
+                        <Label Name="LblBankPrijs">0</Label>
+                    </StackPanel>
             </Button>
                 <Button x:Name="BankBonus" Content="Bank Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
 
@@ -259,15 +311,17 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Image Source="images/Temple.png" Width="40"></Image>
+                <Button x:Name="TempleBtn" IsEnabled="False" Click="Button_Click" Style="{StaticResource ButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="images/Temple.png" Width="50"></Image>
                     <Label Grid.Column="1">Temple</Label>
                     <Label Name="LblTempleAantal" Grid.Column="2">0</Label>
-                    <Label Name="LblTemplePrijs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">0</Label>
-                </Grid>
+                        <Label Name="LblTemplePrijs">0</Label>
+                    </StackPanel>
             </Button>
                 <Button x:Name="TempleBonus" Content="Temple Bonus" Click="Bonus_Click" Grid.Column="3"></Button>
              
             </StackPanel>
-        </ScrollViewer>
+        </Viewbox>
     </Grid>
 </Window>

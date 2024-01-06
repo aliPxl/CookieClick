@@ -156,6 +156,14 @@ namespace CookieClick
             timer.Interval = TimeSpan.FromMinutes(1);
             timer.Start();
 
+            CollapseCenterStackPanel();
+        }
+        /// <summary>
+        /// <para>alle stackpannels(direction horizontal) die bij elke klik mijn investeringen representeren zijn standaard collapsed</para>
+        /// <para>tot er op een button/investering word geklikt </para>
+        /// </summary>
+        private void CollapseCenterStackPanel()
+        {
             CursorPanel.Visibility = Visibility.Collapsed;
             GrandmaPanel.Visibility = Visibility.Collapsed;
             FarmPanel.Visibility = Visibility.Collapsed;
@@ -246,8 +254,8 @@ namespace CookieClick
 
             //bij elke klik op een investering word de (opbrengst per 10 miliseconde)opgeslagen in de variable opbrengst
             //passiveincome is altijd per seconde vandaar /100 
-            scoreVar+=passieveInkomenVar/100; //
-            totaalScore+=passieveInkomenVar/100; //
+            scoreVar += passieveInkomenVar / 100; //
+            totaalScore += passieveInkomenVar / 100; //
 
             //als dat is berekend laat ik dit afgerond naar boven aan de gebruiker zien in mijn lblScore lable boven het koekje 
             LblScore.Content = VertaalScore(Math.Ceiling(Math.Round(scoreVar)));
@@ -265,38 +273,38 @@ namespace CookieClick
 
             //cursor       
             LblCursorPrijs.Content = VertaalScore(prijsBerekenen(cursorBasisPrijs, cursorAantalVar));
-            LblCursorAantal.Content = cursorAantalVar;
-            CursorBtn.ToolTip = $"opbrengst per seconde: {cursorPerSeconde}";
+            LblCursorAantal.Content = VertaalScore(cursorAantalVar);
+            CursorBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(cursorPerSeconde)}";
 
             //Grandma      
             LblGrandmaPrijs.Content = VertaalScore(prijsBerekenen(grandmaBasisPrijs, grandmaAantalVar));
-            LblGrandmaAantal.Content = grandmaAantalVar;
-            GrandmaBtn.ToolTip = $"opbrengst per seconde: {grandmaPerSeconde}";
+            LblGrandmaAantal.Content = VertaalScore(grandmaAantalVar);
+            GrandmaBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(grandmaPerSeconde)}";
 
             //farm          
             LblFarmPrijs.Content = VertaalScore(prijsBerekenen(farmBasisPrijs, farmAantalVar));
-            LblFarmAantal.Content = farmAantalVar;
-            FarmBtn.ToolTip = $"opbrengst per seconde: {farmPerSeconde}";
+            LblFarmAantal.Content = VertaalScore(farmAantalVar);
+            FarmBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(farmPerSeconde)}";
 
             //Mine          
             LblMinePrijs.Content = VertaalScore(prijsBerekenen(mineBasisPrijs, mineAantalVar));
-            LblMineAantal.Content = mineAantalVar;
-            MineBtn.ToolTip = $"opbrengst per seconde: {minePerSeconde}";
+            LblMineAantal.Content = VertaalScore(mineAantalVar);
+            MineBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(minePerSeconde)}";
 
             //Factory  
             LblFactoryPrijs.Content = VertaalScore(prijsBerekenen(factoryBasisPrijs, factoryAantalVar));
-            LblFactoryAantal.Content = factoryAantalVar;
-            FactoryBtn.ToolTip = $"opbrengst per seconde: {factoryPerSeconde}";
+            LblFactoryAantal.Content = VertaalScore(factoryAantalVar);
+            FactoryBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(factoryPerSeconde)}";
 
             //Bank         
             LblBankPrijs.Content = VertaalScore(prijsBerekenen(bankBasisPrijs, bankAantalVar));
-            LblBankAantal.Content = bankAantalVar;
-            BankBtn.ToolTip = $"opbrengst per seconde: {bankPerSeconde}";
+            LblBankAantal.Content = VertaalScore(bankAantalVar);
+            BankBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(bankPerSeconde)}";
 
             //Temple        
             LblTemplePrijs.Content = VertaalScore(prijsBerekenen(templeBasisPrijs, templeAantalVar));
-            LblTempleAantal.Content = templeAantalVar;
-            TempleBtn.ToolTip = $"opbrengst per seconde: {templePerSeconde}";
+            LblTempleAantal.Content = VertaalScore(templeAantalVar);
+            TempleBtn.ToolTip = $"opbrengst per seconde: {VertaalScore(templePerSeconde)}";
         }
 
 /// <summary>
@@ -316,15 +324,15 @@ namespace CookieClick
                 return $"{triljoenValue:N3} triljoen";
             }
 
-            if (score >= biljart && score<triljoen)
+            if (score >= biljart && score < triljoen)
             {
-                double biljartValue = Math.Round(score / biljart,3);
+                double biljartValue = Math.Round(score / biljart, 3);
                 return $"{biljartValue:N3} biljart";
             } 
             
-            if (score >= billion && score<biljart)
+            if (score >= billion && score < biljart)
             {
-                double billionValue = Math.Round(score / billion,3);
+                double billionValue = Math.Round(score / billion, 3);
                 return $"{billionValue:N3} billion";
             }
 
@@ -334,7 +342,7 @@ namespace CookieClick
                 return $"{miljardValue:N3} miljard";
             }
 
-            if (score >= million && score<miljard)
+            if (score >= million && score < miljard)
             {
                 double millionValue = Math.Round(score / million,3);
                 return $"{millionValue:N3} million";
@@ -407,6 +415,7 @@ namespace CookieClick
             else
             {
                 CursorBtn.IsEnabled = true;
+                CursorBtn.Opacity = 1;
                 LblCursorPrijs.Foreground = new SolidColorBrush(Colors.Green);
             }
 
@@ -753,8 +762,8 @@ namespace CookieClick
                             cursorTotaalOpbrengst = cursorPerSeconde * cursorAantalVar;
                             Image CursorImage = new Image();
                             CursorImage.Source = new BitmapImage(new Uri("/images/Cursor.png", UriKind.Relative));
-                            CursorImage.Width = 100;
-                            CursorImage.Height = 100;
+                    CursorImage.Width = 50;
+                    CursorImage.Height = 50;
                             CursorImage.Margin = new Thickness(5);
                             CursorPanel.Children.Add(CursorImage);
                     break;
@@ -769,8 +778,8 @@ namespace CookieClick
                             GrandmaPanel.Visibility = Visibility.Visible;
                             Image GrandmaImage = new Image();
                             GrandmaImage.Source = new BitmapImage(new Uri("/images/supperGrandma.png", UriKind.Relative));
-                            GrandmaImage.Width = 100;
-                            GrandmaImage.Height = 100;
+                    GrandmaImage.Width = 50;
+                    GrandmaImage.Height = 50;
                             GrandmaImage.Margin = new Thickness(5);
                             GrandmaPanel.Children.Add(GrandmaImage);
                     break;
@@ -784,8 +793,8 @@ namespace CookieClick
                             FarmPanel.Visibility = Visibility.Visible;
                             Image FarmImage = new Image();
                             FarmImage.Source = new BitmapImage(new Uri("/images/Farm.png", UriKind.Relative));
-                            FarmImage.Width = 100;
-                            FarmImage.Height = 100;
+                    FarmImage.Width = 50;
+                    FarmImage.Height = 50;
                             FarmImage.Margin = new Thickness(5);
                             FarmPanel.Children.Add(FarmImage);
                     break;
@@ -799,8 +808,8 @@ namespace CookieClick
                             MinePanel.Visibility = Visibility.Visible;
                             Image MineImage = new Image();
                             MineImage.Source = new BitmapImage(new Uri("/images/Mine.jpg", UriKind.Relative));
-                            MineImage.Width = 100;
-                            MineImage.Height = 100;
+                    MineImage.Width = 50;
+                    MineImage.Height = 50;
                             MineImage.Margin = new Thickness(5);
                             MinePanel.Children.Add(MineImage);
                     break;
@@ -814,8 +823,8 @@ namespace CookieClick
                             FactoryPanel.Visibility = Visibility.Visible;
                             Image FactoryImage = new Image();
                             FactoryImage.Source = new BitmapImage(new Uri("/images/Factory.png", UriKind.Relative));
-                            FactoryImage.Width = 100;
-                            FactoryImage.Height = 100;
+                    FactoryImage.Width = 50;
+                    FactoryImage.Height = 50;
                             FactoryImage.Margin = new Thickness(5);
                             FactoryPanel.Children.Add(FactoryImage);
                     break;
@@ -829,8 +838,8 @@ namespace CookieClick
                             BankPanel.Visibility = Visibility.Visible;
                             Image BankImage = new Image();
                             BankImage.Source = new BitmapImage(new Uri("/images/Bank.png", UriKind.Relative));
-                            BankImage.Width = 100;
-                            BankImage.Height = 100;
+                    BankImage.Width = 50;
+                    BankImage.Height = 50;
                             BankImage.Margin = new Thickness(5);
                             BankPanel.Children.Add(BankImage);
                     break;
