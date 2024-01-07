@@ -908,7 +908,7 @@ namespace CookieClick
         /// </summary
         private void GoldenCookie_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            passieveInkomenVar = (passieveInkomenVar * 60) * 15;
+            scoreVar += (passieveInkomenVar * 60) * 15;
             GoldenCookie.Visibility = Visibility.Collapsed;
         }
         }
